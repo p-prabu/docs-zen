@@ -38,7 +38,14 @@ The schema master is the domain controller responsible for schema modifications.
 - Schema changes are forest-wide and irreversible
 - Require Schema Admin privileges
 - Should be thoroughly tested before implementation
-- Use tools like ADSI Edit or PowerShell for modifications
+- There are three ways to modify the schema:
+  - Through the Active Directory Schema MMC snap-in
+  - Using LDIF files  
+  - Programmatically using ADSI or LDAP
+
+To know about MMC snap-in, we will use the first method, using Active Directory Schema MMC snap-in.
+
+Reference: [Active Directory Schema Update and Custom Attribute](https://learn.microsoft.com/en-us/archive/technet-wiki/51121.active-directory-schema-update-and-custom-attribute)
 
 ### Best Practices
 - Always backup before schema changes

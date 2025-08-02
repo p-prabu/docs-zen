@@ -118,6 +118,11 @@ So, before touching the schema, make sure you go through a proper checklist.
 - Schema changes are serious and permanent.
 - Don't rush — plan properly.
 - If done right, it's a smooth job. If not, can cause real pain.
+
+## Additional Resources
+
+For detailed step-by-step implementation guide, refer to:
+[Active Directory Schema Update and Custom Attribute](https://learn.microsoft.com/en-us/archive/technet-wiki/51121.active-directory-schema-update-and-custom-attribute)
 `,
   headings: [
     { id: "what-is-active-directory-schema", text: "What is Active Directory Schema?", level: 2 },

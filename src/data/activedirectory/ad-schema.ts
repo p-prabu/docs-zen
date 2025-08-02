@@ -44,7 +44,7 @@ The schema master is the domain controller responsible for schema modifications.
   - Programmatically using ADSI or LDAP
 
 Here it is, using Active Directory Schema MMC snap-in.
-Reference: [step-by-step--add-custom-attribute] (https://learn.microsoft.com/en-us/archive/technet-wiki/51121.active-directory-schema-update-and-custom-attribute#step-by-step--add-custom-attribute)
+Reference: [step-by-step--add-custom-attribute](https://learn.microsoft.com/en-us/archive/technet-wiki/51121.active-directory-schema-update-and-custom-attribute#step-by-step--add-custom-attribute)
 
 ### Best Practices
 - Always backup before schema changes

@@ -14,52 +14,110 @@ interface LanguageToggleProps {
 
 export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
   const [currentLanguage, setCurrentLanguage] = useState<"en" | "ta">("en");
-  const [isGoogleTranslateLoaded, setIsGoogleTranslateLoaded] = useState(false);
 
   // Load Google Translate script
   useEffect(() => {
-    const loadGoogleTranslate = () => {
-      // Check if already loaded
-      if ((window as any).google?.translate) {
-        setIsGoogleTranslateLoaded(true);
+    const addGoogleTranslateScript = () => {
+      // Check if script already exists
+      if (document.getElementById('google-translate-script')) {
         return;
       }
 
-      // Create script element
       const script = document.createElement('script');
+      script.id = 'google-translate-script';
       script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
       script.async = true;
       
-      // Define the callback function
-      (window as any).googleTranslateElementInit = () => {
+      // Initialize Google Translate
+      (window as any).googleTranslateElementInit = function() {
         new (window as any).google.translate.TranslateElement({
           pageLanguage: 'en',
           includedLanguages: 'en,ta',
           layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false,
-          multilanguagePage: true
+          autoDisplay: false
         }, 'google_translate_element');
-        setIsGoogleTranslateLoaded(true);
       };
-
+      
       document.head.appendChild(script);
     };
 
-    loadGoogleTranslate();
+    addGoogleTranslateScript();
   }, []);
+
+  const changeLanguage = (langCode: string) => {
+    const iframe = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
+    if (iframe) {
+      const innerDoc = iframe.contentDocument || iframe.contentWindow?.document;
+      if (innerDoc) {
+        const langOptions = innerDoc.querySelectorAll('.goog-te-menu2-item span.text');
+        langOptions.forEach((option: any) => {
+          if (option.textContent.includes(langCode === 'ta' ? 'Tamil' : 'English')) {
+            option.click();
+          }
+        });
+      }
+    } else {
+      // Fallback method
+      const selectElement = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
+      if (selectElement) {
+        selectElement.value = langCode;
+        selectElement.dispatchEvent(new Event('change'));
+      }
+    }
+  };
 
   const handleLanguageChange = (language: "en" | "ta") => {
     setCurrentLanguage(language);
     
-    // Wait a bit for Google Translate to load if needed
-    setTimeout(() => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-      if (select) {
-        select.value = language;
-        select.dispatchEvent(new Event('change'));
+    // Wait for Google Translate to be ready
+    const checkAndTranslate = () => {
+      if ((window as any).google?.translate) {
+        changeLanguage(language);
+      } else {
+        setTimeout(checkAndTranslate, 500);
       }
-    }, 100);
+    };
+    
+    checkAndTranslate();
   };
+
+  // Add CSS to hide Google Translate UI
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.id = 'google-translate-styles';
+    style.textContent = `
+      .goog-te-banner-frame.skiptranslate,
+      .goog-te-gadget-icon,
+      .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+        display: none !important;
+      }
+      
+      body {
+        top: 0px !important;
+      }
+      
+      #google_translate_element,
+      .goog-te-gadget-simple {
+        display: none !important;
+      }
+      
+      .goog-te-menu-frame {
+        max-height: 400px !important;
+        overflow-y: auto !important;
+      }
+    `;
+    
+    if (!document.getElementById('google-translate-styles')) {
+      document.head.appendChild(style);
+    }
+    
+    return () => {
+      const existingStyle = document.getElementById('google-translate-styles');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
+  }, []);
 
   if (variant === "mobile") {
     return (
@@ -93,8 +151,8 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
           </DropdownMenuContent>
         </DropdownMenu>
         
-        {/* Hidden Google Translate Element */}
-        <div id="google_translate_element" className="hidden"></div>
+        {/* Google Translate Element - Hidden but functional */}
+        <div id="google_translate_element" style={{ visibility: 'hidden', width: '1px', height: '1px' }}></div>
       </div>
     );
   }
@@ -130,32 +188,8 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       
-      {/* Hidden Google Translate Element */}
-      <div id="google_translate_element" className="hidden"></div>
+      {/* Google Translate Element - Hidden but functional */}
+      <div id="google_translate_element" style={{ visibility: 'hidden', width: '1px', height: '1px' }}></div>
     </div>
   );
-}
-
-// Add CSS to hide Google Translate branding
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = `
-    .goog-te-banner-frame.skiptranslate,
-    .goog-te-gadget-icon {
-      display: none !important;
-    }
-    
-    body {
-      top: 0px !important;
-    }
-    
-    .goog-te-combo {
-      display: none !important;
-    }
-    
-    .goog-te-menu-value {
-      color: transparent !important;
-    }
-  `;
-  document.head.appendChild(style);
 }

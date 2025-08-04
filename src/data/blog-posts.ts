@@ -6,6 +6,7 @@ import { entraIntro } from './entra/entra-intro';
 import { psIntro } from './powershell/ps-intro';
 import { gpIntro } from './grouppolicy/gp-intro';
 import { intuneIntro } from './intune/intune-intro';
+import { aiIntro } from './ai/ai-intro';
 
 export interface BlogPost {
   id: string;
@@ -40,6 +41,11 @@ export const blogCategories = [
     id: "intune",
     title: "Intune",
     posts: ["intune-intro"]
+  },
+  {
+    id: "ai",
+    title: "AI",
+    posts: ["ai-intro"]
   }
 ];
 
@@ -60,4 +66,7 @@ export const blogPosts: Record<string, BlogPost> = {
   
   // Intune posts
   "intune-intro": intuneIntro,
+  
+  // AI posts
+  "ai-intro": aiIntro,
 };

@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronRight, ChevronDown, BookOpen, Code, Settings, FileText, Search, X, Menu, Shield, Terminal, FolderCog, Smartphone } from "lucide-react";
+import { ChevronRight, ChevronDown, BookOpen, Code, Settings, FileText, Search, X, Menu, Shield, Terminal, FolderCog, Smartphone, Brain } from "lucide-react";
 import { useState, useEffect } from "react";
 import { blogCategories, blogPosts } from "@/data/blog-posts";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,8 @@ const categoryIcons = {
   "entra": Settings,
   "powershell": Terminal,
   "grouppolicy": FolderCog,
-  "intune": Smartphone
+  "intune": Smartphone,
+  "ai": Brain
 } as const;
 
 interface BlogSidebarProps {

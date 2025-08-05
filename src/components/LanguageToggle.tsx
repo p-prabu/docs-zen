@@ -71,46 +71,87 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
       }
       
       .goog-te-gadget-simple {
-        background-color: transparent !important;
-        border: none !important;
+        background-color: hsl(var(--background)) !important;
+        border: 1px solid hsl(var(--border)) !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
         font-size: 14px !important;
         font-family: inherit !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+        transition: all 0.2s ease-in-out !important;
+        min-width: 120px !important;
+        display: block !important;
+      }
+      
+      .goog-te-gadget-simple:hover {
+        border-color: hsl(var(--primary)) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
       }
       
       .goog-te-gadget-simple .goog-te-menu-value {
         color: hsl(var(--foreground)) !important;
         font-family: inherit !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
       }
       
       .goog-te-gadget-simple .goog-te-menu-value:hover {
         text-decoration: none !important;
       }
       
+      .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+        margin-right: 8px !important;
+      }
+      
       .goog-te-combo {
         background-color: hsl(var(--background)) !important;
         border: 1px solid hsl(var(--border)) !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
         color: hsl(var(--foreground)) !important;
         font-size: 14px !important;
-        padding: 8px 12px !important;
+        padding: 10px 12px !important;
         font-family: inherit !important;
+        min-width: 140px !important;
+        transition: all 0.2s ease-in-out !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
       }
       
       .goog-te-combo:hover {
         background-color: hsl(var(--accent)) !important;
+        border-color: hsl(var(--primary)) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
       }
       
       .goog-te-combo:focus {
         outline: 2px solid hsl(var(--ring)) !important;
         outline-offset: 2px !important;
+        border-color: hsl(var(--primary)) !important;
       }
       
       ${variant === "mobile" ? `
+        .goog-te-gadget-simple {
+          min-width: 100px !important;
+          font-size: 12px !important;
+          padding: 6px 10px !important;
+        }
         .goog-te-combo {
           font-size: 12px !important;
-          padding: 6px 8px !important;
+          padding: 8px 10px !important;
+          min-width: 100px !important;
         }
-      ` : ''}
+      ` : `
+        .goog-te-gadget-simple {
+          width: 100% !important;
+          min-width: 140px !important;
+        }
+        .goog-te-combo {
+          width: 100% !important;
+          min-width: 140px !important;
+        }
+      `}
     `;
     
     if (!document.getElementById('google-translate-styles')) {
@@ -127,17 +168,17 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
 
   if (variant === "mobile") {
     return (
-      <div className="flex items-center">
-        <div className="text-xs text-muted-foreground mr-2">Translate:</div>
-        <div id="google_translate_element" className="text-sm min-w-[100px]"></div>
+      <div className="flex items-center gap-2">
+        <div className="text-xs text-muted-foreground font-medium">Translate:</div>
+        <div id="google_translate_element" className="flex-shrink-0"></div>
       </div>
     );
   }
 
   return (
-    <div className="px-3 py-2">
-      <div className="text-sm text-muted-foreground mb-2">Language:</div>
-      <div id="google_translate_element" className="min-w-[120px]"></div>
+    <div className="px-3 py-3 space-y-3">
+      <div className="text-sm font-medium text-foreground">Language</div>
+      <div id="google_translate_element" className="w-full"></div>
     </div>
   );
 }

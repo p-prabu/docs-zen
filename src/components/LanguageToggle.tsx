@@ -45,25 +45,49 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
   }, []);
 
   const changeLanguage = (langCode: string) => {
-    const iframe = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
-    if (iframe) {
-      const innerDoc = iframe.contentDocument || iframe.contentWindow?.document;
-      if (innerDoc) {
-        const langOptions = innerDoc.querySelectorAll('.goog-te-menu2-item span.text');
-        langOptions.forEach((option: any) => {
-          if (option.textContent.includes(langCode === 'ta' ? 'Tamil' : 'English')) {
-            option.click();
-          }
-        });
-      }
-    } else {
-      // Fallback method
-      const selectElement = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-      if (selectElement) {
-        selectElement.value = langCode;
-        selectElement.dispatchEvent(new Event('change'));
+    // Use Google's built-in translation function
+    if ((window as any).google?.translate?.TranslateElement) {
+      // Trigger translation directly
+      const translateElement = (window as any).google.translate.TranslateElement.getInstance();
+      if (translateElement) {
+        translateElement.select.setValue(langCode);
+        return;
       }
     }
+    
+    // Try to access the select element directly
+    const selectElement = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
+    if (selectElement) {
+      selectElement.value = langCode;
+      selectElement.dispatchEvent(new Event('change'));
+      return;
+    }
+    
+    // Force create a new translation if needed
+    setTimeout(() => {
+      if ((window as any).google?.translate) {
+        // Re-initialize if the element exists
+        const element = document.getElementById('google_translate_element');
+        if (element) {
+          element.innerHTML = '';
+          new (window as any).google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,ta',
+            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element');
+          
+          // Try again after re-initialization
+          setTimeout(() => {
+            const newSelect = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
+            if (newSelect) {
+              newSelect.value = langCode;
+              newSelect.dispatchEvent(new Event('change'));
+            }
+          }, 1000);
+        }
+      }
+    }, 100);
   };
 
   const handleLanguageChange = (language: "en" | "ta") => {

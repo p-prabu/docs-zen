@@ -10,28 +10,51 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
     const addGoogleTranslateScript = () => {
       // Check if script already exists
       if (document.getElementById('google-translate-script')) {
+        console.log('Google Translate script already exists');
         return;
       }
+
+      console.log('Loading Google Translate script...');
+      
+      // Initialize Google Translate function first
+      (window as any).googleTranslateElementInit = function() {
+        console.log('Initializing Google Translate widget...');
+        try {
+          new (window as any).google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,ta,hi,fr,es,de,it,pt,ru,ja,ko,zh,ar',
+            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+            multilanguagePage: true,
+            gaTrack: true,
+            gaId: 'UA-XXXXX-X'
+          }, 'google_translate_element');
+          console.log('Google Translate widget initialized successfully');
+        } catch (error) {
+          console.error('Error initializing Google Translate:', error);
+        }
+      };
 
       const script = document.createElement('script');
       script.id = 'google-translate-script';
       script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
       script.async = true;
+      script.defer = true;
       
-      // Initialize Google Translate
-      (window as any).googleTranslateElementInit = function() {
-        new (window as any).google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'en,ta,hi,fr,es,de,it,pt,ru,ja,ko,zh,ar',
-          layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-          multilanguagePage: true
-        }, 'google_translate_element');
+      script.onload = () => {
+        console.log('Google Translate script loaded successfully');
+      };
+      
+      script.onerror = (error) => {
+        console.error('Error loading Google Translate script:', error);
       };
       
       document.head.appendChild(script);
     };
 
-    addGoogleTranslateScript();
+    // Add a small delay to ensure DOM is ready
+    setTimeout(() => {
+      addGoogleTranslateScript();
+    }, 100);
   }, []);
 
   // Add CSS to style Google Translate widget

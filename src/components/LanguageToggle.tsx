@@ -1,20 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Languages } from "lucide-react";
-import { useState, useEffect } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useEffect } from "react";
 
 interface LanguageToggleProps {
   variant?: "mobile" | "desktop";
 }
 
 export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
-  const [currentLanguage, setCurrentLanguage] = useState<"en" | "ta">("en");
-
   // Load Google Translate script
   useEffect(() => {
     const addGoogleTranslateScript = () => {
@@ -32,9 +22,9 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
       (window as any).googleTranslateElementInit = function() {
         new (window as any).google.translate.TranslateElement({
           pageLanguage: 'en',
-          includedLanguages: 'en,ta',
+          includedLanguages: 'en,ta,hi,fr,es,de,it,pt,ru,ja,ko,zh,ar',
           layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
+          multilanguagePage: true
         }, 'google_translate_element');
       };
       
@@ -44,75 +34,12 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
     addGoogleTranslateScript();
   }, []);
 
-  const changeLanguage = (langCode: string) => {
-    // Use Google's built-in translation function
-    if ((window as any).google?.translate?.TranslateElement) {
-      // Trigger translation directly
-      const translateElement = (window as any).google.translate.TranslateElement.getInstance();
-      if (translateElement) {
-        translateElement.select.setValue(langCode);
-        return;
-      }
-    }
-    
-    // Try to access the select element directly
-    const selectElement = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-    if (selectElement) {
-      selectElement.value = langCode;
-      selectElement.dispatchEvent(new Event('change'));
-      return;
-    }
-    
-    // Force create a new translation if needed
-    setTimeout(() => {
-      if ((window as any).google?.translate) {
-        // Re-initialize if the element exists
-        const element = document.getElementById('google_translate_element');
-        if (element) {
-          element.innerHTML = '';
-          new (window as any).google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,ta',
-            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element');
-          
-          // Try again after re-initialization
-          setTimeout(() => {
-            const newSelect = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-            if (newSelect) {
-              newSelect.value = langCode;
-              newSelect.dispatchEvent(new Event('change'));
-            }
-          }, 1000);
-        }
-      }
-    }, 100);
-  };
-
-  const handleLanguageChange = (language: "en" | "ta") => {
-    setCurrentLanguage(language);
-    
-    // Wait for Google Translate to be ready
-    const checkAndTranslate = () => {
-      if ((window as any).google?.translate) {
-        changeLanguage(language);
-      } else {
-        setTimeout(checkAndTranslate, 500);
-      }
-    };
-    
-    checkAndTranslate();
-  };
-
-  // Add CSS to hide Google Translate UI
+  // Add CSS to style Google Translate widget
   useEffect(() => {
     const style = document.createElement('style');
     style.id = 'google-translate-styles';
     style.textContent = `
-      .goog-te-banner-frame.skiptranslate,
-      .goog-te-gadget-icon,
-      .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+      .goog-te-banner-frame.skiptranslate {
         display: none !important;
       }
       
@@ -120,15 +47,47 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
         top: 0px !important;
       }
       
-      #google_translate_element,
       .goog-te-gadget-simple {
-        display: none !important;
+        background-color: transparent !important;
+        border: none !important;
+        font-size: 14px !important;
+        font-family: inherit !important;
       }
       
-      .goog-te-menu-frame {
-        max-height: 400px !important;
-        overflow-y: auto !important;
+      .goog-te-gadget-simple .goog-te-menu-value {
+        color: hsl(var(--foreground)) !important;
+        font-family: inherit !important;
       }
+      
+      .goog-te-gadget-simple .goog-te-menu-value:hover {
+        text-decoration: none !important;
+      }
+      
+      .goog-te-combo {
+        background-color: hsl(var(--background)) !important;
+        border: 1px solid hsl(var(--border)) !important;
+        border-radius: 6px !important;
+        color: hsl(var(--foreground)) !important;
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+        font-family: inherit !important;
+      }
+      
+      .goog-te-combo:hover {
+        background-color: hsl(var(--accent)) !important;
+      }
+      
+      .goog-te-combo:focus {
+        outline: 2px solid hsl(var(--ring)) !important;
+        outline-offset: 2px !important;
+      }
+      
+      ${variant === "mobile" ? `
+        .goog-te-combo {
+          font-size: 12px !important;
+          padding: 6px 8px !important;
+        }
+      ` : ''}
     `;
     
     if (!document.getElementById('google-translate-styles')) {
@@ -141,79 +100,19 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
         existingStyle.remove();
       }
     };
-  }, []);
+  }, [variant]);
 
   if (variant === "mobile") {
     return (
       <div className="flex items-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="text-docs-nav-foreground hover:bg-accent"
-            >
-              <Languages className="h-4 w-4" />
-              <span className="ml-1 text-xs">
-                {currentLanguage === "en" ? "EN" : "த"}
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-background border border-border z-50">
-            <DropdownMenuItem
-              onClick={() => handleLanguageChange("en")}
-              className={currentLanguage === "en" ? "bg-accent" : ""}
-            >
-              🇬🇧 English
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleLanguageChange("ta")}
-              className={currentLanguage === "ta" ? "bg-accent" : ""}
-            >
-              🇮🇳 தமிழ் (Tamil)
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        
-        {/* Google Translate Element - Hidden but functional */}
-        <div id="google_translate_element" style={{ visibility: 'hidden', width: '1px', height: '1px' }}></div>
+        <div id="google_translate_element" className="text-sm"></div>
       </div>
     );
   }
 
   return (
     <div className="px-3 py-2">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="text-muted-foreground hover:text-foreground hover:bg-accent w-full justify-start"
-          >
-            <Languages className="h-4 w-4" />
-            <span className="ml-2">
-              {currentLanguage === "en" ? "English" : "தமிழ்"}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="bg-background border border-border z-50">
-          <DropdownMenuItem
-            onClick={() => handleLanguageChange("en")}
-            className={currentLanguage === "en" ? "bg-accent" : ""}
-          >
-            🇬🇧 English
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleLanguageChange("ta")}
-            className={currentLanguage === "ta" ? "bg-accent" : ""}
-          >
-            🇮🇳 தமிழ் (Tamil)
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      
-      {/* Google Translate Element - Hidden but functional */}
-      <div id="google_translate_element" style={{ visibility: 'hidden', width: '1px', height: '1px' }}></div>
+      <div id="google_translate_element"></div>
     </div>
   );
 }

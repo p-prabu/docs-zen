@@ -105,14 +105,16 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
   if (variant === "mobile") {
     return (
       <div className="flex items-center">
-        <div id="google_translate_element" className="text-sm"></div>
+        <div className="text-xs text-muted-foreground mr-2">Translate:</div>
+        <div id="google_translate_element" className="text-sm min-w-[100px]"></div>
       </div>
     );
   }
 
   return (
     <div className="px-3 py-2">
-      <div id="google_translate_element"></div>
+      <div className="text-sm text-muted-foreground mb-2">Language:</div>
+      <div id="google_translate_element" className="min-w-[120px]"></div>
     </div>
   );
 }

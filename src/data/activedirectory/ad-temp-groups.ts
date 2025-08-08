@@ -17,9 +17,9 @@ Because dynamic objects cannot be converted back to regular objects, and because
 
 ## Scenario 1: temporary installation team
 
-Imagine you need to install an enterprise application that requires Domain‑Admin rights to register service connection points or perform schema updates. Granting Domain‑Admin rights permanently is risky, and remembering to remove those rights later is easy to forget. A better pattern is to create a dynamic group, make it a member of the "Domain Admins" group, and add your installers to the dynamic group. The Active‑Directory FAQ describes this approach: "the accounts through which the application is installed become members of this temporary group… After the TTL has expired the group is automatically deleted and the user accounts lose their domain admin rights". Once the TTL expires, the installation accounts no longer have elevated rights and the group itself vanishes.
+Imagine you need to install an enterprise application that requires Domain‑Admin rights to register service connection points or perform schema updates. Granting Domain‑Admin rights permanently is risky, and remembering to remove those rights later is easy to forget. A better pattern is to create a dynamic group, make it a member of the "Domain Admins" group, and add your installers to the dynamic group. Once the TTL expires, the installation accounts no longer have elevated rights and the group itself vanishes.
 
-Here is a sample PowerShell script that creates such a group with a five‑minute lifetime. Note that if your forest has not lowered the minimum TTL (15 minutes), Active Directory will round up the TTL automatically.
+Here is a sample PowerShell script that creates such a group with a 15‑minute lifetime:
 
 \`\`\`powershell
 # How long should the group live?
@@ -46,7 +46,7 @@ Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"
 Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName
 \`\`\`
 
-After five minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
+After 15 minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
 
 ## Scenario 2: pilot testing or proof‑of‑concept
 
@@ -73,7 +73,7 @@ When the day ends, \`PilotUser\` is automatically removed from the "Test-App-Adm
 
 - **Short‑term project teams:** A cross‑functional team might need access to shared resources for a campaign or development sprint. Using a dynamic group with a TTL equal to the project's end date ensures that the permissions are cleaned up automatically when the team disbands.
 - **Contractor or vendor access:** External consultants often need rights to a file share or VPN. Rather than manually removing them later, a dynamic group can be set to expire when the contract ends, automatically revoking access.
-- **On‑call administrative access:** When an engineer is on call for a weekend, you can use \`Add‑ADGroupMember –MemberTimeToLive\` to add them to a privileged group for 72 hours. After the on‑call period, the membership automatically disappears, reducing the risk of leaving accounts with high privilege.
+- **On‑call administrative access or Weekend patching activity for Domain controller:** When an engineer is on call for a weekend, you can use \`Add‑ADGroupMember –MemberTimeToLive\` to add them to a privileged group for 72 hours. After the on‑call period, the membership automatically disappears, reducing the risk of leaving accounts with high privilege.
 
 ## When to use which feature
 
@@ -82,6 +82,11 @@ Choose **dynamic (temporary) groups** when you need the group itself to disappea
 Use **temporary group membership** (PAM) when the group structure should remain but a user's membership should expire automatically. This feature requires Windows Server 2016 functional level and the Privileged Access Management feature to be enabled. It is well suited to granting short‑term access without creating new groups and has no minimum TTL—memberships can last for minutes or days.
 
 Both features help enforce the principle of least privilege and reduce the risk of lingering rights. By incorporating these techniques into your Active Directory management practices, you can make your environment both more secure and easier to audit.
+
+## References
+
+- [Temporary Group Membership in Active Directory](https://woshub.com/temporary-membership-in-active-directory-groups/#:~:text=To%20use%20the%20Temporary%20Group,after%20it%20has%20been%20enabled)
+- [Temporary Permissions in Active Directory](https://activedirectoryfaq.com/2018/05/temporary-permissions-active-directory/#:~:text=Here%20is%20a%20summary%20of,important%20facts%20about%20temporary%20groups)
     `,
   headings: [
     { id: "dynamic-objects-temporary-groups-with-a-time‑to‑live", text: "Dynamic objects: temporary groups with a time‑to‑live", level: 2 },

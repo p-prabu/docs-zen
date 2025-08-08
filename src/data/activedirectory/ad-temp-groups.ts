@@ -13,6 +13,8 @@ Modern IT environments are dynamic. Administrators often need to grant privilege
 
 Dynamic objects were introduced in Windows Server 2003. When you create an object and include the \`dynamicObject\` class along with its base class (such as \`group\`), the object receives an \`entryTTL\` attribute—a number of seconds that the object will live. As the TTL counts down, Active Directory decrements the value on each replication cycle; when it reaches zero, the object is removed by the garbage collector without leaving a tombstone. There is a default minimum TTL (15 minutes) and a default TTL of one day, but these values can be adjusted if needed.
 
+Note: The maximum lifetime interval for a temporary (dynamic) group is 1 year.
+
 Because dynamic objects cannot be converted back to regular objects, and because they do not survive past their TTL, they are best suited for tasks or projects with a clearly defined end date. Here's how you might use them in practice.
 
 ## Scenario 1: temporary installation team
@@ -52,6 +54,20 @@ After 15 minutes (or the configured minimum), this group will be removed, and th
 
 New applications or security features often require special access to test servers or an isolated organizational unit. Instead of making testers permanent members of powerful groups, you can use the **temporary group membership** feature introduced in Windows Server 2016. Unlike dynamic objects, temporary group membership leaves the group intact; only the membership expires. Microsoft describes this as a way to "temporarily grant a user some authority… After the specified time has elapsed, the user will be automatically removed from the security group". This makes it ideal for pilot projects where testers require access only for a few hours or days.
 
+Prerequisites and considerations:
+- Forest functional level must be Windows Server 2016, and all domain controllers in the forest should run Windows Server 2016 or later.
+- You must enable Privileged Access Management (PAM) at the forest scope. This is a one-way, irreversible change—plan and test first.
+- Applies to security groups; distribution groups are not supported.
+- Access removal takes effect when Kerberos tickets refresh; users may need to re‑authenticate or wait for ticket renewal to see access revoked.
+
+Enable PAM:
+
+\`\`\`powershell
+Enable-ADOptionalFeature 'Privileged Access Management Feature' -Scope ForestOrConfigurationSet -Target contoso.com
+\`\`\`
+
+Once this feature is enabled, it cannot be disabled.
+
 Here's how to temporarily add a user to a group using the \`-MemberTimeToLive\` parameter:
 
 \`\`\`powershell
@@ -59,8 +75,8 @@ Here's how to temporarily add a user to a group using the \`-MemberTimeToLive\` 
 $ttl = New-TimeSpan -Days 1
 
 # Add the pilot tester to the group for one day
-Add-ADGroupMember -Identity "Test-App-Admins" \`
-                  -Members "PilotUser" \`
+Add-ADGroupMember -Identity "Test-App-Admins" \
+                  -Members "PilotUser" \
                   -MemberTimeToLive $ttl
 
 # Verify the TTL

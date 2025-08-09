@@ -28,15 +28,23 @@ export function BlogContent({ post }: BlogContentProps) {
             code({ node, inline, className, children, ...props }: any) {
               const match = /language-(\w+)/.exec(className || '');
               return !inline && match ? (
-                <SyntaxHighlighter
-                  style={tomorrow}
-                  language={match[1]}
-                  PreTag="div"
-                  className="rounded-lg text-sm"
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
+                <div className="overflow-x-auto my-4">
+                  <SyntaxHighlighter
+                    style={tomorrow}
+                    language={match[1]}
+                    PreTag="div"
+                    className="rounded-lg text-xs md:text-sm !whitespace-pre-wrap !break-words md:!whitespace-pre"
+                    customStyle={{
+                      margin: 0,
+                      fontSize: 'inherit',
+                      overflowX: 'auto',
+                      wordWrap: 'break-word'
+                    }}
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                </div>
               ) : (
                 <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...props}>
                   {children}

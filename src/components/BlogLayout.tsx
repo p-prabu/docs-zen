@@ -1,6 +1,7 @@
 import { BlogSidebar } from "./BlogSidebar";
 import { TableOfContents } from "./TableOfContents";
 import { BlogContent } from "./BlogContent";
+import { Comments } from "./Comments";
 import { MobileHeader } from "./MobileHeader";
 import { blogPosts } from "@/data/blog-posts";
 import { useParams } from "react-router-dom";
@@ -93,8 +94,11 @@ export function BlogLayout() {
         </div>
         
         {/* Main Content */}
-        <div className="flex flex-1 overflow-hidden">
-          <BlogContent post={post} />
+        <div className="flex flex-1 overflow-y-auto">
+          <div className="flex-1">
+            <BlogContent post={post} />
+            <Comments postId={post.id} />
+          </div>
           
           {/* Table of Contents - Hidden on mobile */}
           <div className="hidden lg:block">

@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "./ThemeToggle";
-import { LanguageToggle } from "./LanguageToggle";
 
 const categoryIcons = {
   "activedirectory": Shield,
@@ -226,11 +225,6 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
             );
           })}
         </nav>
-        
-        {/* Language Toggle - Desktop Only */}
-        <div className="hidden md:block mt-6 pt-4 border-t border-docs-border">
-          <LanguageToggle variant="desktop" />
-        </div>
       </div>
     </div>
   );

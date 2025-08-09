@@ -29,13 +29,18 @@ export function Comments({ postId }: CommentsProps) {
 
   const fetchComments = async () => {
     try {
+      console.log('Fetching comments for post:', postId);
       const { data, error } = await supabase
         .from('comments')
         .select('*')
         .eq('post_id', postId)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching comments:', error);
+        throw error;
+      }
+      console.log('Fetched comments:', data);
       setComments(data || []);
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -53,20 +58,29 @@ export function Comments({ postId }: CommentsProps) {
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase
+      console.log('Submitting comment:', { post_id: postId, name: name.trim(), message: message.trim() });
+      
+      const { data, error } = await supabase
         .from('comments')
         .insert({
           post_id: postId,
           name: name.trim(),
           message: message.trim()
-        });
+        })
+        .select(); // Add select to get the inserted data back
 
-      if (error) throw error;
+      if (error) {
+        console.error('Insert error:', error);
+        throw error;
+      }
       
+      console.log('Comment inserted successfully:', data);
       toast.success("Comment posted successfully!");
       setName("");
       setMessage("");
-      fetchComments(); // Refresh comments
+      
+      // Refresh comments after successful insert
+      await fetchComments();
     } catch (error) {
       console.error('Error posting comment:', error);
       toast.error("Failed to post comment. Please try again.");

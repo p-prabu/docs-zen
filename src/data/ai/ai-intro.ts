@@ -12,7 +12,7 @@ Artificial Intelligence (AI) represents one of the most transformative technolog
 
 Artificial Intelligence refers to the simulation of human intelligence in machines that are programmed to think and learn like humans. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cvKe_WYeITU?start=6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[Watch on YouTube](https://www.youtube.com/watch?v=cvKe_WYeITU&t=6s)
 
 ## Types of AI
 

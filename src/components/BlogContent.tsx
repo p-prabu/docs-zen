@@ -49,7 +49,6 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group overflow-x-auto my-4">
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -60,13 +59,6 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          PreTag="div"
-          className="rounded-lg text-xs md:text-sm !whitespace-pre-wrap !break-words md:!whitespace-pre"
-          customStyle={{
-            margin: 0,
-            fontSize: "inherit",
-            overflowX: "auto",
-            wordWrap: "break-word",
           }}
           {...props}
         >
@@ -81,7 +73,7 @@ export function BlogContent({ post }: BlogContentProps) {
   };
 
   return (
-    <div className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
+    <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
       <div className="prose prose-sm md:prose-lg max-w-none">
         <ReactMarkdown
           components={{

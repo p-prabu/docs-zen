@@ -49,7 +49,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="w-64 bg-docs-toc border-l border-docs-border h-screen overflow-y-auto sticky top-0">
+    <div className="w-64 bg-docs-toc border-l border-docs-border h-screen sticky top-0 overflow-y-auto">
       <div className="p-6">
         <h3 className="text-sm font-semibold text-docs-toc-foreground mb-4 uppercase tracking-wide">
           On This Page

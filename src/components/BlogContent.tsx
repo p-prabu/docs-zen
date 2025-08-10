@@ -139,6 +139,19 @@ export function BlogContent({ post }: BlogContentProps) {
                 {children}
               </td>
             ),
+            iframe: ({ src, width, height, title, ...props }) => (
+              <div className="my-6 relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  src={src}
+                  title={title}
+                  className="absolute top-0 left-0 w-full h-full rounded-lg"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  {...props}
+                />
+              </div>
+            ),
           }}
         >
           {post.content}

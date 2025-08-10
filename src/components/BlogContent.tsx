@@ -49,7 +49,6 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group my-4 w-full overflow-x-auto">
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -60,12 +59,6 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          PreTag="pre"
-          className="rounded-lg text-xs md:text-sm"
-          customStyle={{
-            margin: 0,
-            fontSize: "inherit",
-            overflow: "visible",
           }}
           {...props}
         >

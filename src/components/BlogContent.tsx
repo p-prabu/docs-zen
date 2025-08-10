@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState, type ReactNode, HTMLAttributes } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Copy, Check } from "lucide-react";
 import type { BlogPost } from "@/data/blog-posts";
 
 interface BlogContentProps {
@@ -19,38 +20,71 @@ export function BlogContent({ post }: BlogContentProps) {
       }
     });
   }, [post]);
+  const CodeBlock = (
+    {
+      node,
+      inline,
+      className,
+      children,
+      ...props
+    }: {
+      node?: unknown;
+      inline?: boolean;
+      className?: string;
+      children: ReactNode;
+    } & HTMLAttributes<HTMLElement>
+  ) => {
+    const [copied, setCopied] = useState(false);
+    const match = /language-(\w+)/.exec(className || "");
+    const codeString = String(children).replace(/\n$/, "");
+
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(codeString);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+    };
+
+    return !inline && match ? (
+      <div className="relative group my-4 w-full overflow-x-auto">
+        <button
+          onClick={handleCopy}
+          aria-label="Copy code"
+          className="absolute right-2 top-2 rounded bg-muted p-1 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+        </button>
+        <SyntaxHighlighter
+          style={tomorrow}
+          language={match[1]}
+          PreTag="pre"
+          className="rounded-lg text-xs md:text-sm"
+          customStyle={{
+            margin: 0,
+            fontSize: "inherit",
+            overflow: "visible",
+          }}
+          {...props}
+        >
+          {codeString}
+        </SyntaxHighlighter>
+      </div>
+    ) : (
+      <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...props}>
+        {children}
+      </code>
+    );
+  };
 
   return (
-    <div className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
+    <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
       <div className="prose prose-sm md:prose-lg max-w-none">
         <ReactMarkdown
           components={{
-            code({ node, inline, className, children, ...props }: any) {
-              const match = /language-(\w+)/.exec(className || '');
-              return !inline && match ? (
-                <div className="overflow-x-auto my-4">
-                  <SyntaxHighlighter
-                    style={tomorrow}
-                    language={match[1]}
-                    PreTag="div"
-                    className="rounded-lg text-xs md:text-sm !whitespace-pre-wrap !break-words md:!whitespace-pre"
-                    customStyle={{
-                      margin: 0,
-                      fontSize: 'inherit',
-                      overflowX: 'auto',
-                      wordWrap: 'break-word'
-                    }}
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                </div>
-              ) : (
-                <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...props}>
-                  {children}
-                </code>
-              );
-            },
+            code: CodeBlock,
             h1: ({ children }) => (
               <h1 className="text-4xl font-bold text-foreground mb-6 mt-8 first:mt-0">
                 {children}

@@ -20,20 +20,8 @@ export function BlogContent({ post }: BlogContentProps) {
       }
     });
   }, [post]);
-  const CodeBlock = (
-    {
-      node,
-      inline,
-      className,
-      children,
-      ...props
-    }: {
-      node?: unknown;
-      inline?: boolean;
-      className?: string;
-      children: ReactNode;
-    } & HTMLAttributes<HTMLElement>
-  ) => {
+  const CodeBlock = (props: any) => {
+    const { node, inline, className, children, ...restProps } = props;
     const [copied, setCopied] = useState(false);
     const match = /language-(\w+)/.exec(className || "");
     const codeString = String(children).replace(/\n$/, "");
@@ -49,6 +37,7 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
+      <div className="relative group overflow-x-auto">
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -59,14 +48,14 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          }}
-          {...props}
+          className="overflow-x-auto text-sm"
+          {...restProps}
         >
           {codeString}
         </SyntaxHighlighter>
       </div>
     ) : (
-      <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...props}>
+      <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...restProps}>
         {children}
       </code>
     );

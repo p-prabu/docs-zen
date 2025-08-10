@@ -5,6 +5,7 @@ import { adSchema } from './activedirectory/ad-schema';
 import { adTempGroups } from './activedirectory/ad-temp-groups';
 import { entraIntro } from './entra/entra-intro';
 import { psIntro } from './powershell/ps-intro';
+import { psWriteHTML } from './powershell/ps-writehtml';
 import { gpIntro } from './grouppolicy/gp-intro';
 import { intuneIntro } from './intune/intune-intro';
 import { aiIntro } from './ai/ai-intro';
@@ -31,7 +32,7 @@ export const blogCategories = [
   {
     id: "powershell",
     title: "PowerShell",
-    posts: ["ps-intro"]
+    posts: ["ps-intro", "ps-writehtml"]
   },
   {
     id: "grouppolicy",
@@ -62,6 +63,7 @@ export const blogPosts: Record<string, BlogPost> = {
   
   // PowerShell posts
   "ps-intro": psIntro,
+  "ps-writehtml": psWriteHTML,
   
   // Group Policy posts
   "gp-intro": gpIntro,

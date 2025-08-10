@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode, HTMLAttributes } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Copy, Check } from "lucide-react";
@@ -65,6 +66,7 @@ export function BlogContent({ post }: BlogContentProps) {
     <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
       <div className="prose prose-sm md:prose-lg max-w-none">
         <ReactMarkdown
+          rehypePlugins={[rehypeRaw]}
           components={{
             code: CodeBlock,
             h1: ({ children }) => (

@@ -21,7 +21,14 @@ export function BlogContent({ post }: BlogContentProps) {
       }
     });
   }, [post]);
-  const CodeBlock = (props: any) => {
+  const CodeBlock = (
+    props: {
+      node?: unknown;
+      inline?: boolean;
+      className?: string;
+      children: ReactNode;
+    } & HTMLAttributes<HTMLElement>
+  ) => {
     const { node, inline, className, children, ...restProps } = props;
     const [copied, setCopied] = useState(false);
     const match = /language-(\w+)/.exec(className || "");
@@ -126,18 +133,18 @@ export function BlogContent({ post }: BlogContentProps) {
             ),
             table: ({ children }) => (
               <div className="overflow-x-auto my-6">
-                <table className="w-full border-collapse border border-border">
+                <table className="border-collapse border border-border min-w-max">
                   {children}
                 </table>
               </div>
             ),
             th: ({ children }) => (
-              <th className="border border-border bg-muted px-4 py-2 text-left font-semibold">
+              <th className="border border-border bg-muted px-4 py-2 text-left font-semibold whitespace-nowrap">
                 {children}
               </th>
             ),
             td: ({ children }) => (
-              <td className="border border-border px-4 py-2">
+              <td className="border border-border px-4 py-2 whitespace-nowrap">
                 {children}
               </td>
             ),

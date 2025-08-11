@@ -7,7 +7,7 @@ export const entraOuVsAu: BlogPost = {
   content: `
 # OU vs AU
 
-## Administrative Units vs Organizational Units: Understanding the Difference in Entra ID and On-Prem Active Directory
+## Understanding the Difference in Entra ID and On-Prem Active Directory
 
 ## Introduction
 

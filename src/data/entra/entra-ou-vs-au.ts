@@ -140,7 +140,7 @@ Administrative Units in Entra ID and Organizational Units in on-prem AD both pro
   In a hybrid environment, they work **hand in hand** to give you precise control over **who can manage what** — both on-premises and in the cloud.
 `,
   headings: [
-    { id: "administrative-units-vs-organizational-units-understanding-the-difference-in-entra-id-and-on-prem-active-directory", text: "Administrative Units vs Organizational Units: Understanding the Difference in Entra ID and On-Prem Active Directory", level: 2 },
+    { id: "Understanding the Difference in Entra ID and On-Prem Active Directory", text: "Understanding the Difference in Entra ID and On-Prem Active Directory", level: 2 },
     { id: "introduction", text: "Introduction", level: 2 },
     { id: "what-are-organizational-units-ous", text: "What Are Organizational Units (OUs)?", level: 2 },
     { id: "what-are-administrative-units-aus", text: "What Are Administrative Units (AUs)?", level: 2 },

@@ -11,6 +11,8 @@ import { gpIntro } from './grouppolicy/gp-intro';
 import { intuneIntro } from './intune/intune-intro';
 import { aiIntro } from './ai/ai-intro';
 import { adDsrmPassword } from './activedirectory/ad-dsrm-password';
+import { adHealthCheck } from './activedirectory/ad-health-check';
+
 
 export interface BlogPost {
   id: string;
@@ -24,7 +26,7 @@ export const blogCategories = [
   {
     id: "activedirectory",
     title: "Active Directory",
-    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password"]
+    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password","ad-health-check"]
   },
   {
     id: "entra",
@@ -60,6 +62,7 @@ export const blogPosts: Record<string, BlogPost> = {
   "ad-schema": adSchema,
   "ad-temp-groups": adTempGroups,
   "ad-dsrm-password": adDsrmPassword,
+  "ad-health-check": adHealthCheck, // ← add this
   
   // Entra ID posts
   "entra-intro": entraIntro,

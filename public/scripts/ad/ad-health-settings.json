@@ -1,0 +1,5 @@
+{
+  "MaxReplicationFailures": 0,
+  "MaxDfsrBacklog": 100,
+  "MaxTimeSkewSeconds": 5
+}

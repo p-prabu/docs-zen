@@ -10,6 +10,7 @@ import { psWriteHTML } from './powershell/ps-writehtml';
 import { gpIntro } from './grouppolicy/gp-intro';
 import { intuneIntro } from './intune/intune-intro';
 import { aiIntro } from './ai/ai-intro';
+import { adDsrmPassword } from './activedirectory/ad-dsrm-password';
 
 export interface BlogPost {
   id: string;
@@ -23,7 +24,7 @@ export const blogCategories = [
   {
     id: "activedirectory",
     title: "Active Directory",
-    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups"]
+    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password"]
   },
   {
     id: "entra",
@@ -58,6 +59,7 @@ export const blogPosts: Record<string, BlogPost> = {
   "ad-domain": adDomain,
   "ad-schema": adSchema,
   "ad-temp-groups": adTempGroups,
+  "ad-dsrm-password": adDsrmPassword,
   
   // Entra ID posts
   "entra-intro": entraIntro,

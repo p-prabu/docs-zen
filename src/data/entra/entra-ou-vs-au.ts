@@ -72,15 +72,9 @@ An AU called **“Sweden HR”** could include only HR users based in Sweden. A 
 
 ## Core Differences Between OUs and AUs
 
-| Feature / Purpose      | **OU (On-Prem AD)**                                     | **AU (Entra ID)**                     |
-| ---------------------- | ------------------------------------------------------- | ------------------------------------- |
-| **Primary Goal**       | Organize objects, apply policies, delegate admin rights | Scope admin rights in cloud directory |
-| **Structure**          | Hierarchical (nested)                                   | Flat (no nesting)                     |
-| **Policy Application** | Yes, via Group Policy Objects                           | No policy settings — delegation only  |
-| **Membership Basis**   | Object’s location in AD                                 | Static or dynamic membership rules    |
-| **Delegation**         | ACLs on OU                                              | Entra ID RBAC scoped to AU            |
-| **Environment**        | On-premises                                             | Cloud (Microsoft Entra ID)            |
-| **Impact on Object**   | Affects DN/path                                         | Does not change DN or identity        |
+Although both concepts help administrators manage subsets of directory objects, they diverge in structure and capability. OUs live in on-premises Active Directory, form a hierarchical tree, and can enforce settings through Group Policy. An object's OU is part of its distinguished name, and delegation relies on ACLs applied to that container.
+
+AUs exist in Microsoft Entra ID and are flat containers that simply scope administrative roles. Membership can be static or rule-based, delegation is handled with Entra ID RBAC, and adding an object to an AU doesn't alter its identity or apply policies.
 
 ---
 

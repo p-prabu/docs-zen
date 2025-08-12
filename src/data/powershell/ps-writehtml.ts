@@ -4,7 +4,7 @@ export const psWriteHTML: BlogPost = {
   id: "ps-writehtml",
   title: "PSWriteHTML – Transforming PowerShell Reports into Interactive Dashboards",
   category: "powershell",
-  content: `
+  body: `
 # PSWriteHTML – Transforming PowerShell Reports into Interactive Dashboards
 
 In the world of IT automation, reporting is as important as the scripts that gather the data. Clear, well-designed reports not only make your work look professional, they help decision-makers understand complex data at a glance. **PSWriteHTML** is a PowerShell module that makes this possible—without requiring you to learn HTML, CSS, or JavaScript.

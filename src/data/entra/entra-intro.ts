@@ -4,7 +4,7 @@ export const entraIntro: BlogPost = {
   id: "entra-intro",
   title: "Introduction to Microsoft Entra ID",
   category: "entra",
-  content: `
+  body: `
 # Introduction to Microsoft Entra ID
 
 Microsoft Entra ID (formerly Azure Active Directory) is Microsoft's cloud-based identity and access management service. This guide will help you understand the fundamentals of Entra ID and its role in modern cloud computing.

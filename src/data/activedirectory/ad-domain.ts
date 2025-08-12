@@ -4,7 +4,7 @@ export const adDomain: BlogPost = {
   id: "ad-domain",
   title: "Active Directory Domains",
   category: "activedirectory",
-  content: `
+  body: `
 # Active Directory Domains
 
 Understanding Active Directory domains is fundamental to managing Windows-based enterprise networks. This guide covers the essential concepts of AD domains and their role in network organization.

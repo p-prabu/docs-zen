@@ -18,7 +18,7 @@ export interface BlogPost {
   id: string;
   title: string;
   category: string;
-  content: string;
+  body: string;
   headings: { id: string; text: string; level: number }[];
 }
 

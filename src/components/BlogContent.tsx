@@ -163,7 +163,7 @@ export function BlogContent({ post }: BlogContentProps) {
             ),
           }}
         >
-          {post.content}
+          {post.body}
         </ReactMarkdown>
       </div>
     </div>

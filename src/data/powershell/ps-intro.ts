@@ -4,7 +4,7 @@ export const psIntro: BlogPost = {
   id: "ps-intro",
   title: "Introduction to PowerShell",
   category: "powershell",
-  content: `
+  body: `
 # Introduction to PowerShell
 
 PowerShell is a powerful command-line shell and scripting language designed for system administration and automation. This guide covers the fundamentals of PowerShell for IT professionals.

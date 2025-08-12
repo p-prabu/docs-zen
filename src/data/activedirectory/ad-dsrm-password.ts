@@ -5,7 +5,7 @@ export const adDsrmPassword: BlogPost = {
   id: "ad-dsrm-password",
   title: "Getting DSRM Password Under Control",
   category: "activedirectory",
-  body: `# **Getting DSRM Password Under Control**
+  body: `# **Getting DSRM Password Control**
 
   _Published: Aug 11, 2025_
 

@@ -45,7 +45,7 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group overflow-x-auto">
+      <div className="relative group overflow-auto">
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -56,7 +56,7 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          className="overflow-x-auto text-sm"
+          className="overflow-auto text-sm pr-8"
           {...restProps}
         >
           {codeString}
@@ -163,7 +163,7 @@ export function BlogContent({ post }: BlogContentProps) {
             ),
           }}
         >
-          {post.content}
+          {post.body}
         </ReactMarkdown>
       </div>
     </div>

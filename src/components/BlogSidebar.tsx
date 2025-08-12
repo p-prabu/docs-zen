@@ -1,7 +1,8 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronRight, ChevronDown, BookOpen, Code, Settings, FileText, Search, X, Menu, Shield, Terminal, FolderCog, Smartphone, Brain } from "lucide-react";
+import { ChevronRight, ChevronDown, Settings, Search, X, Shield, Terminal, FolderCog, Smartphone, Brain } from "lucide-react";
 import { useState, useEffect } from "react";
 import { blogCategories, blogPosts } from "@/data/blog-posts";
+import type { BlogPost } from "@/data/blog-posts";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +30,7 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   ]);
   const [isRouterReady, setIsRouterReady] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredResults, setFilteredResults] = useState<any[]>([]);
+  const [filteredResults, setFilteredResults] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     // Ensure router is ready before rendering NavLinks
@@ -38,11 +39,11 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
 
   useEffect(() => {
     if (searchQuery.trim()) {
-      const results: any[] = [];
+      const results: BlogPost[] = [];
       Object.values(blogPosts).forEach((post) => {
         if (
           post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.content.toLowerCase().includes(searchQuery.toLowerCase())
+          post.body.toLowerCase().includes(searchQuery.toLowerCase())
         ) {
           results.push(post);
         }
@@ -54,9 +55,9 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   }, [searchQuery]);
 
   const toggleCategory = (categoryId: string) => {
-    setExpandedCategories(prev => 
+    setExpandedCategories((prev) =>
       prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId)
+        ? prev.filter((id) => id !== categoryId)
         : [...prev, categoryId]
     );
   };

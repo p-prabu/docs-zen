@@ -1,10 +1,11 @@
+/* eslint-disable no-useless-escape */
 import { BlogPost } from '../blog-posts';
 
 export const adDsrmPassword: BlogPost = {
   id: "ad-dsrm-password",
   title: "Getting DSRM Password Under Control",
   category: "activedirectory",
-  content: `# **Getting DSRM Password Under Control**
+  body: `# **Getting DSRM Password Under Control**
 
   _Published: Aug 11, 2025_
 

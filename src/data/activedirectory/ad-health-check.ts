@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 // src/app/blog/activedirectory/ad-health-check.ts
 import { BlogPost } from '../blog-posts';
 
@@ -5,7 +6,7 @@ export const adHealthCheck: BlogPost = {
   id: "ad-health-check",
   title: "AD Health Check",
   category: "activedirectory",
-  content: `# AD Health Check
+  body: `# AD Health Check
 
 _Published: Aug 12, 2025_
 

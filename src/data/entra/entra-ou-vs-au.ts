@@ -7,7 +7,7 @@ export const entraOuVsAu: BlogPost = {
   content: `
 # OU vs AU
 
-## Understanding the Difference in Entra ID and On-Prem Active Directory
+_Published: Aug 11, 2025_
 
 ## Introduction
 

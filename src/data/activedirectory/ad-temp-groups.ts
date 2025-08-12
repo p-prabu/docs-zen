@@ -22,15 +22,13 @@ Because dynamic objects cannot be converted back to regular objects, and because
 Imagine you need to install an enterprise application that requires Domain-Admin rights to register service connection points or perform schema updates. Granting Domain-Admin rights permanently is risky, and remembering to remove those rights later is easy to forget. A better pattern is to create a dynamic group, make it a member of the "Domain Admins" group, and add your installers to the dynamic group. Once the TTL expires, the installation accounts no longer have elevated rights and the group itself vanishes.
 
 Here is a sample PowerShell script that creates such a group with a 15-minute lifetime:
-<span style="color:#1d4ed8;font-style:italic"
+<span style="color:#1d4ed8;font-style:italic">
   _# How long should the group live?_
   _$TTLMinutes = 15_
   _$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds_
-
   _# Bind to the destination OU_
   _$destinationOu = "OU=TempGroups,DC=contoso,DC=com"_
   _$destinationOuObject = [ADSI]("LDAP://$destinationOu")_
-
   _# Create the dynamic group_
   _$GroupName = "AppInstallTeam"_
   _$TempGroup = $destinationOuObject.Create("group", "CN=$GroupName")_
@@ -41,11 +39,11 @@ Here is a sample PowerShell script that creates such a group with a 15-minute li
   _$expiryTime = (Get-Date).AddSeconds($TTLSeconds)_
   _$TempGroup.Put("description", "Will be deleted at $expiryTime (UTC)")_
   _$TempGroup.SetInfo()_
-
   _# Add the installers to this dynamic group and nest it into Domain Admins_
   _Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"_
   _Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName_
- >
+  
+</span>
 After 15 minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
 
 ## Scenario 2: pilot testing or proof-of-concept

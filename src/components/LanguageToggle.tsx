@@ -1,5 +1,21 @@
 import { useEffect } from "react";
 
+declare global {
+  interface Window {
+    googleTranslateElementInit?: () => void;
+    google?: {
+      translate: {
+        TranslateElement: {
+          new (options: Record<string, unknown>, elementId: string): void;
+          InlineLayout: {
+            SIMPLE: unknown;
+          };
+        };
+      };
+    };
+  }
+}
+
 interface LanguageToggleProps {
   variant?: "mobile" | "desktop";
 }
@@ -10,25 +26,25 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
     const addGoogleTranslateScript = () => {
       // Check if script already exists
       if (document.getElementById('google-translate-script')) {
-        console.log('Google Translate script already exists');
         return;
       }
-
-      console.log('Loading Google Translate script...');
       
       // Initialize Google Translate function first
-      (window as any).googleTranslateElementInit = function() {
-        console.log('Initializing Google Translate widget...');
+      window.googleTranslateElementInit = function() {
         try {
-          new (window as any).google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,ta,hi,fr,es,de,it,pt,ru,ja,ko,zh,ar',
-            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-            multilanguagePage: true,
-            gaTrack: true,
-            gaId: 'UA-XXXXX-X'
-          }, 'google_translate_element');
-          console.log('Google Translate widget initialized successfully');
+          if (window.google?.translate) {
+            new window.google.translate.TranslateElement(
+              {
+                pageLanguage: 'en',
+                includedLanguages: 'en,ta,hi,fr,es,de,it,pt,ru,ja,ko,zh,ar',
+                layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+                multilanguagePage: true,
+                gaTrack: true,
+                gaId: 'UA-XXXXX-X'
+              },
+              'google_translate_element'
+            );
+          }
         } catch (error) {
           console.error('Error initializing Google Translate:', error);
         }
@@ -40,9 +56,6 @@ export function LanguageToggle({ variant = "desktop" }: LanguageToggleProps) {
       script.async = true;
       script.defer = true;
       
-      script.onload = () => {
-        console.log('Google Translate script loaded successfully');
-      };
       
       script.onerror = (error) => {
         console.error('Error loading Google Translate script:', error);

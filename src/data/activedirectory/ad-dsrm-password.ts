@@ -46,19 +46,15 @@ The right approach depends on how many DCs you manage.
 
 ### **Option A – Manual Per DC**
 
-~~~cmd
-ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
-~~~
+_ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"_
 
-(\`server null\` = the DC you are on)
+(_server null_ = the DC you are on)
 
 ### **Option B – Sync From Domain Account**
 
-~~~cmd
-ntdsutil "set dsrm password" "sync from domain account CONTOSO\\DSRM-Sync-User" "quit" "quit"
-~~~
+_ntdsutil "set dsrm password" "sync from domain account CONTOSO\DSRM-Sync-User" "quit" "quit"_
 
-* Run locally on each DC or automate with PowerShell and \`Invoke-Command\`.
+* Run locally on each DC or automate with PowerShell and _Invoke-Command_.
 * Use a **dedicated** account just for DSRM sync.
 * Store that account’s password in the vault.
 
@@ -71,44 +67,36 @@ It’s not enough to set the password — you need to confirm it works **before*
 ### **A. Offline Test (Most Reliable)**
 
 1. Set the DC to boot into DSRM:
-   
-   ~~~cmd
-   bcdedit /set safeboot dsrepair
-   shutdown /r /f /t 5
-   ~~~
+
+   _bcdedit /set safeboot dsrepair_  
+   _shutdown /r /f /t 5_
+
 2. At logon, sign in as:
-   
-   ~~~
-   .\Administrator
-   ~~~
-   
+
+   _.\Administrator_
+
    with your DSRM password.
+
 3. **Revert safeboot afterward** to normal boot:
-   
-   ~~~cmd
-   bcdedit /deletevalue safeboot
-   shutdown /r /f /t 5
-   ~~~
+
+   _bcdedit /deletevalue safeboot_  
+   _shutdown /r /f /t 5_
 
 ### **B. Online Test (Quick Check)**
 
-*(Less secure — use only briefly, then revert.)*
+_(Less secure — use only briefly, then revert.)_
 
 1. Temporarily allow DSRM login in normal mode:
-   
-   ~~~cmd
-   reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 2 /f
-   ~~~
+
+   _reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 2 /f_
+
 2. Log off and sign in as:
-   
-   ~~~
-   .\Administrator
-   ~~~
+
+   _.\Administrator_
+
 3. **Revert registry to default (0) after testing**:
-   
-   ~~~cmd
-   reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 0 /f
-   ~~~
+
+   _reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 0 /f_
 
 ---
 
@@ -116,7 +104,7 @@ It’s not enough to set the password — you need to confirm it works **before*
 
 * Store DSRM credentials in a **secure vault**.
 * Test the password **at least twice a year**.
-* Never leave \`DsrmAdminLogonBehavior\` at \`2\`.
+* Never leave _DsrmAdminLogonBehavior_ at _2_.
 * If using **sync method**:
   * Keep the sync account non-privileged.
   * Rotate and re-sync regularly.

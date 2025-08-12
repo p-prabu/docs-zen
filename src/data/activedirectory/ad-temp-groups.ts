@@ -11,7 +11,7 @@ Modern IT environments are dynamic. Administrators often need to grant privilege
 
 ## Dynamic objects: temporary groups with a time-to-live
 
-Dynamic objects were introduced in Windows Server 2003. When you create an object and include the \`dynamicObject\` class along with its base class (such as \`group\`), the object receives an \`entryTTL\` attribute—a number of seconds that the object will live. As the TTL counts down, Active Directory decrements the value on each replication cycle; when it reaches zero, the object is removed by the garbage collector without leaving a tombstone. There is a default minimum TTL (15 minutes) and a default TTL of one day, but these values can be adjusted if needed.
+Dynamic objects were introduced in Windows Server 2003. When you create an object and include the _dynamicObject_ class along with its base class (such as _group_), the object receives an _entryTTL_ attribute—a number of seconds that the object will live. As the TTL counts down, Active Directory decrements the value on each replication cycle; when it reaches zero, the object is removed by the garbage collector without leaving a tombstone. There is a default minimum TTL (15 minutes) and a default TTL of one day, but these values can be adjusted if needed.
 
 Note: The maximum lifetime interval for a temporary (dynamic) group is 1 year.
 
@@ -23,30 +23,28 @@ Imagine you need to install an enterprise application that requires Domain-Admin
 
 Here is a sample PowerShell script that creates such a group with a 15-minute lifetime:
 
-<pre><code class="language-powershell" style="color:#1d4ed8; font-style: italic">
-# How long should the group live?
-$TTLMinutes = 15
-$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds
+  _# How long should the group live?_
+  _$TTLMinutes = 15_
+  _$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds_
 
-# Bind to the destination OU
-$destinationOu = "OU=TempGroups,DC=contoso,DC=com"
-$destinationOuObject = [ADSI]("LDAP://$destinationOu")
+  _# Bind to the destination OU_
+  _$destinationOu = "OU=TempGroups,DC=contoso,DC=com"_
+  _$destinationOuObject = [ADSI]("LDAP://$destinationOu")_
 
-# Create the dynamic group
-$GroupName = "AppInstallTeam"
-$TempGroup = $destinationOuObject.Create("group", "CN=$GroupName")
-$TempGroup.PutEx(2, "objectClass", @("dynamicObject", "group"))
-$TempGroup.Put("entryTTL", $TTLSeconds)
-$TempGroup.Put("sAMAccountName", $GroupName)
-$TempGroup.Put("displayName", "Application Installation Team")
-$expiryTime = (Get-Date).AddSeconds($TTLSeconds)
-$TempGroup.Put("description", "Will be deleted at $expiryTime (UTC)")
-$TempGroup.SetInfo()
+  _# Create the dynamic group_
+  _$GroupName = "AppInstallTeam"_
+  _$TempGroup = $destinationOuObject.Create("group", "CN=$GroupName")_
+  _$TempGroup.PutEx(2, "objectClass", @("dynamicObject", "group"))_
+  _$TempGroup.Put("entryTTL", $TTLSeconds)_
+  _$TempGroup.Put("sAMAccountName", $GroupName)_
+  _$TempGroup.Put("displayName", "Application Installation Team")_
+  _$expiryTime = (Get-Date).AddSeconds($TTLSeconds)_
+  _$TempGroup.Put("description", "Will be deleted at $expiryTime (UTC)")_
+  _$TempGroup.SetInfo()_
 
-# Add the installers to this dynamic group and nest it into Domain Admins
-Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"
-Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName
-</code></pre>
+  _# Add the installers to this dynamic group and nest it into Domain Admins_
+  _Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"_
+  _Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName_
 
 After 15 minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
 
@@ -62,32 +60,28 @@ Prerequisites and considerations:
 
 Enable PAM:
 
-<pre><code class="language-powershell" style="color:#1d4ed8; font-style: italic">
-Enable-ADOptionalFeature 'Privileged Access Management Feature' -Scope ForestOrConfigurationSet -Target contoso.com
-</code></pre>
+  _Enable-ADOptionalFeature 'Privileged Access Management Feature' -Scope ForestOrConfigurationSet -Target contoso.com_
 
 Once this feature is enabled, it cannot be disabled.
 
-Here's how to temporarily add a user to a group using the \`-MemberTimeToLive\` parameter:
+Here's how to temporarily add a user to a group using the _-MemberTimeToLive_ parameter:
 
-<pre><code class="language-powershell" style="color:#1d4ed8; font-style: italic">
-# Set a TTL of 1 day for the test membership
-$ttl = New-TimeSpan -Days 1
+  _# Set a TTL of 1 day for the test membership_
+  _$ttl = New-TimeSpan -Days 1_
 
-# Add the pilot tester to the group for one day
-Add-ADGroupMember -Identity "Test-App-Admins" -Members "PilotUser" -MemberTimeToLive $ttl
+  _# Add the pilot tester to the group for one day_
+  _Add-ADGroupMember -Identity "Test-App-Admins" -Members "PilotUser" -MemberTimeToLive $ttl_
 
-# Verify the TTL
-Get-ADGroup "Test-App-Admins" -Property member -ShowMemberTimeToLive
-</code></pre>
+  _# Verify the TTL_
+  _Get-ADGroup "Test-App-Admins" -Property member -ShowMemberTimeToLive_
 
-When the day ends, \`PilotUser\` is automatically removed from the "Test-App-Admins" group. This approach avoids the 15-minute minimum TTL and does not require creating a separate group.
+When the day ends, _PilotUser_ is automatically removed from the "Test-App-Admins" group. This approach avoids the 15-minute minimum TTL and does not require creating a separate group.
 
 ## Other practical use-cases
 
 - **Short-term project teams:** A cross-functional team might need access to shared resources for a campaign or development sprint. Using a dynamic group with a TTL equal to the project's end date ensures that the permissions are cleaned up automatically when the team disbands.
 - **Contractor or vendor access:** External consultants often need rights to a file share or VPN. Rather than manually removing them later, a dynamic group can be set to expire when the contract ends, automatically revoking access.
-- **On-call administrative access or Weekend patching activity for Domain controller:** When an engineer is on call for a weekend, you can use \`Add-ADGroupMember –MemberTimeToLive\` to add them to a privileged group for 72 hours. After the on-call period, the membership automatically disappears, reducing the risk of leaving accounts with high privilege.
+- **On-call administrative access or Weekend patching activity for Domain controller:** When an engineer is on call for a weekend, you can use _Add-ADGroupMember –MemberTimeToLive_ to add them to a privileged group for 72 hours. After the on-call period, the membership automatically disappears, reducing the risk of leaving accounts with high privilege.
 
 ## When to use which feature
 

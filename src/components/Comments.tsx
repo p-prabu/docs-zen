@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,13 +23,8 @@ export function Comments({ postId }: CommentsProps) {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchComments();
-  }, [postId]);
-
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
-      console.log('Fetching comments for post:', postId);
       const { data, error } = await supabase
         .from('comments')
         .select('*')
@@ -40,12 +35,15 @@ export function Comments({ postId }: CommentsProps) {
         console.error('Error fetching comments:', error);
         throw error;
       }
-      console.log('Fetched comments:', data);
       setComments(data || []);
     } catch (error) {
       console.error('Error fetching comments:', error);
     }
-  };
+  }, [postId]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,8 +56,6 @@ export function Comments({ postId }: CommentsProps) {
     setIsSubmitting(true);
     
     try {
-      console.log('Submitting comment:', { post_id: postId, name: name.trim(), message: message.trim() });
-      
       const { data, error } = await supabase
         .from('comments')
         .insert({
@@ -74,7 +70,6 @@ export function Comments({ postId }: CommentsProps) {
         throw error;
       }
       
-      console.log('Comment inserted successfully:', data);
       toast.success("Comment posted successfully!");
       setName("");
       setMessage("");

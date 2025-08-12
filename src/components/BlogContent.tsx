@@ -45,7 +45,6 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group overflow-auto">
         <button
           onClick={handleCopy}
           aria-label="Copy code"

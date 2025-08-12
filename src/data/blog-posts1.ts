@@ -1,8 +1,9 @@
+/* eslint-disable no-useless-escape */
 export interface BlogPost {
   id: string;
   title: string;
   category: string;
-  content: string;
+  body: string;
   headings: { id: string; text: string; level: number }[];
 }
 
@@ -34,7 +35,7 @@ export const blogPosts: Record<string, BlogPost> = {
     id: "introduction",
     title: "Introduction",
     category: "getting-started",
-    content: `
+    body: `
 # Introduction to Our Platform
 
 Welcome to our comprehensive documentation. This guide will help you understand the fundamentals of our platform and get you started quickly.
@@ -84,7 +85,7 @@ Ready to dive in? Check out our [Quick Start Guide](/quick-start) to build your 
     id: "quick-start",
     title: "Quick Start Guide",
     category: "getting-started",
-    content: `
+    body: `
 # Quick Start Guide
 
 Get up and running with our platform in under 5 minutes.
@@ -162,7 +163,7 @@ Now that you have a working application, explore our tutorials to learn more adv
     id: "installation",
     title: "Installation Guide",
     category: "getting-started",
-    content: `
+    body: `
 # Installation Guide
 
 Detailed installation instructions for different environments and platforms.
@@ -276,7 +277,7 @@ This will guide you through the initial setup process.
     id: "first-app",
     title: "Building Your First App",
     category: "tutorials",
-    content: `
+    body: `
 # Building Your First App
 
 Learn how to build a complete application from scratch using our platform.
@@ -467,7 +468,7 @@ Congratulations! You've built your first app. Next, learn about:
     id: "advanced-concepts",
     title: "Advanced Concepts",
     category: "tutorials",
-    content: `
+    body: `
 # Advanced Concepts
 
 Dive deeper into advanced features and patterns.
@@ -684,7 +685,7 @@ async function authenticateUser(token) {
     id: "best-practices",
     title: "Best Practices",
     category: "tutorials",
-    content: `
+    body: `
 # Best Practices
 
 Follow these guidelines to build maintainable and scalable applications.
@@ -971,7 +972,7 @@ test('user can complete todo workflow', async () => {
     id: "authentication",
     title: "Authentication",
     category: "api-reference",
-    content: `
+    body: `
 # Authentication
 
 Learn how to authenticate users and secure your API requests.
@@ -1293,7 +1294,7 @@ describe('Authentication', () => {
     id: "endpoints",
     title: "API Endpoints",
     category: "api-reference",
-    content: `
+    body: `
 # API Endpoints
 
 Complete reference for all available API endpoints.
@@ -1696,7 +1697,7 @@ $projects = $client->projects->list();
     id: "webhooks",
     title: "Webhooks",
     category: "api-reference",
-    content: `
+    body: `
 # Webhooks
 
 Learn how to receive real-time notifications from our platform.

@@ -22,7 +22,7 @@ Because dynamic objects cannot be converted back to regular objects, and because
 Imagine you need to install an enterprise application that requires Domain-Admin rights to register service connection points or perform schema updates. Granting Domain-Admin rights permanently is risky, and remembering to remove those rights later is easy to forget. A better pattern is to create a dynamic group, make it a member of the "Domain Admins" group, and add your installers to the dynamic group. Once the TTL expires, the installation accounts no longer have elevated rights and the group itself vanishes.
 
 Here is a sample PowerShell script that creates such a group with a 15-minute lifetime:
-/n
+
 <span style="color:#1d4ed8;font-style:italic">
 
   _# How long should the group live?_
@@ -44,9 +44,9 @@ Here is a sample PowerShell script that creates such a group with a 15-minute li
   _# Add the installers to this dynamic group and nest it into Domain Admins_ 
   _Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"_ 
   _Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName_ 
-  
+
 </span>
-/n
+
 After 15 minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
 
 ## Scenario 2: pilot testing or proof-of-concept

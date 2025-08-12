@@ -61,7 +61,7 @@ Output: a folder of **CSV/TXT** you can diff over time or ingest into dashboards
 
 ---
 
-## Safety notes
+## Safety notes.
 - Read-only queries; no changes are made.
 - Snapshot and Deep Check honor thresholds in \`ad-health-settings.json\` (optional).
 - If DNS or replication are badly broken, some commands may time out—still safe, just noisy.

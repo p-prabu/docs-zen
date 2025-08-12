@@ -13,14 +13,14 @@ interface BlogContentProps {
 export function BlogContent({ post }: BlogContentProps) {
   useEffect(() => {
     // Add IDs to headings for table of contents navigation
-    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    
+    const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
     post.headings.forEach((heading, index) => {
       if (headings[index]) {
-        headings[index].id = heading.id;
+        (headings[index] as HTMLElement).id = heading.id;
       }
     });
   }, [post]);
+
   const CodeBlock = (
     props: {
       node?: unknown;
@@ -29,7 +29,7 @@ export function BlogContent({ post }: BlogContentProps) {
       children: ReactNode;
     } & HTMLAttributes<HTMLElement>
   ) => {
-    const { node, inline, className, children, ...restProps } = props;
+    const { inline, className, children, ...restProps } = props;
     const [copied, setCopied] = useState(false);
     const match = /language-(\w+)/.exec(className || "");
     const codeString = String(children).replace(/\n$/, "");
@@ -45,7 +45,7 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group overflow-auto">
+      <div className="relative group overflow-x-auto">
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -56,14 +56,17 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          className="overflow-auto text-sm pr-8"
+          className="overflow-x-auto text-sm pr-8"
           {...restProps}
         >
           {codeString}
         </SyntaxHighlighter>
       </div>
     ) : (
-      <code className={`${className} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`} {...restProps}>
+      <code
+        className={`${className ?? ""} bg-muted px-1.5 py-0.5 rounded text-sm font-mono`}
+        {...restProps}
+      >
         {children}
       </code>
     );
@@ -96,46 +99,32 @@ export function BlogContent({ post }: BlogContentProps) {
                 {children}
               </h4>
             ),
-            p: ({ children }) => (
-              <p className="text-foreground leading-7 mb-4">
-                {children}
-              </p>
-            ),
+            p: ({ children }) => <p className="text-foreground leading-7 mb-4">{children}</p>,
             ul: ({ children }) => (
-              <ul className="text-foreground space-y-2 mb-4 ml-6 list-disc">
-                {children}
-              </ul>
+              <ul className="text-foreground space-y-2 mb-4 ml-6 list-disc">{children}</ul>
             ),
             ol: ({ children }) => (
-              <ol className="text-foreground space-y-2 mb-4 ml-6 list-decimal">
-                {children}
-              </ol>
+              <ol className="text-foreground space-y-2 mb-4 ml-6 list-decimal">{children}</ol>
             ),
-            li: ({ children }) => (
-              <li className="text-foreground">
-                {children}
-              </li>
-            ),
+            li: ({ children }) => <li className="text-foreground">{children}</li>,
             blockquote: ({ children }) => (
               <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground my-4">
                 {children}
               </blockquote>
             ),
             a: ({ href, children }) => (
-              <a 
-                href={href} 
+              <a
+                href={href}
                 className="text-primary hover:text-primary/80 underline transition-colors"
-                target={href?.startsWith('http') ? '_blank' : undefined}
-                rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                target={href?.startsWith("http") ? "_blank" : undefined}
+                rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
               >
                 {children}
               </a>
             ),
             table: ({ children }) => (
               <div className="overflow-x-auto my-6">
-                <table className="border-collapse border border-border min-w-max">
-                  {children}
-                </table>
+                <table className="border-collapse border border-border min-w-max">{children}</table>
               </div>
             ),
             th: ({ children }) => (
@@ -144,12 +133,10 @@ export function BlogContent({ post }: BlogContentProps) {
               </th>
             ),
             td: ({ children }) => (
-              <td className="border border-border px-4 py-2 whitespace-nowrap">
-                {children}
-              </td>
+              <td className="border border-border px-4 py-2 whitespace-nowrap">{children}</td>
             ),
-            iframe: ({ src, width, height, title, ...props }) => (
-              <div className="my-6 relative w-full" style={{ paddingBottom: '56.25%' }}>
+            iframe: ({ src, title, ...props }) => (
+              <div className="my-6 relative w-full" style={{ paddingBottom: "56.25%" }}>
                 <iframe
                   src={src}
                   title={title}

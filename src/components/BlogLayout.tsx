@@ -12,9 +12,7 @@ export function BlogLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
-  console.log("BlogLayout rendering with postId:", postId);
   const post = postId ? blogPosts[postId] : blogPosts["ad-intro"];
-  console.log("Selected post:", post?.title);
 
   useEffect(() => {
     const checkMobile = () => {

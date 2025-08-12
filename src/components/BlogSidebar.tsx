@@ -1,23 +1,37 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronRight, ChevronDown, BookOpen, Code, Settings, FileText, Search, X, Menu, Shield, Terminal, FolderCog, Smartphone, Brain } from "lucide-react";
+import {
+  ChevronRight,
+  ChevronDown,
+  BookOpen,
+  Code,
+  Settings,
+  FileText,
+  Search,
+  X,
+  Menu,
+  Shield,
+  Terminal,
+  FolderCog,
+  Smartphone,
+  Brain,
+} from "lucide-react";
 import { useState, useEffect } from "react";
-import { blogCategories, blogPosts } from "@/data/blog-posts";
-import type { BlogPost } from "@/data/blog-posts";
+import { blogCategories, blogPosts, type BlogPost } from "@/data/blog-posts";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "./ThemeToggle";
 
 const categoryIcons = {
-  "activedirectory": Shield,
-  "entra": Settings,
-  "powershell": Terminal,
-  "grouppolicy": FolderCog,
-  "intune": Smartphone,
-  "ai": Brain
+  activedirectory: Shield,
+  entra: Settings,
+  powershell: Terminal,
+  grouppolicy: FolderCog,
+  intune: Smartphone,
+  ai: Brain,
 } as const;
 
-interface BlogSidebarProps {
+export interface BlogSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
   className?: string;
@@ -26,7 +40,7 @@ interface BlogSidebarProps {
 export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarProps) {
   const location = useLocation();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([
-    "activedirectory" // Default to expanded
+    "activedirectory", // Default expanded
   ]);
   const [isRouterReady, setIsRouterReady] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,7 +54,7 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   useEffect(() => {
     if (searchQuery.trim()) {
       const results: BlogPost[] = [];
-      Object.values(blogPosts).forEach((post) => {
+      Object.values(blogPosts).forEach((post: BlogPost) => {
         if (
           post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           post.body.toLowerCase().includes(searchQuery.toLowerCase())
@@ -55,10 +69,8 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   }, [searchQuery]);
 
   const toggleCategory = (categoryId: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
+    setExpandedCategories((prev) =>
+      prev.includes(categoryId) ? prev.filter((id) => id !== categoryId) : [...prev, categoryId]
     );
   };
 
@@ -68,13 +80,15 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
 
   if (!isRouterReady) {
     return (
-      <div className={cn(
-        "w-64 bg-docs-nav border-r border-docs-border h-screen overflow-y-auto",
-        "md:sticky md:top-0",
-        "fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out",
-        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-        className
-      )}>
+      <div
+        className={cn(
+          "w-64 bg-docs-nav border-r border-docs-border h-screen overflow-y-auto",
+          "md:sticky md:top-0",
+          "fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+          className
+        )}
+      >
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-2">
@@ -99,13 +113,15 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   }
 
   return (
-    <div className={cn(
-      "w-64 bg-docs-nav border-r border-docs-border h-screen overflow-y-auto",
-      "md:sticky md:top-0",
-      "fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out",
-      isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-      className
-    )}>
+    <div
+      className={cn(
+        "w-64 bg-docs-nav border-r border-docs-border h-screen overflow-y-auto",
+        "md:sticky md:top-0",
+        "fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out",
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+        className
+      )}
+    >
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
@@ -158,7 +174,7 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
                   >
                     <div className="font-medium">{post.title}</div>
                     <div className="text-xs text-docs-toc-foreground capitalize">
-                      {post.category.replace('-', ' ')}
+                      {post.category.replace("-", " ")}
                     </div>
                   </NavLink>
                 ))}
@@ -172,7 +188,8 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
         {/* Navigation */}
         <nav className="space-y-2">
           {blogCategories.map((category) => {
-            const Icon = categoryIcons[category.id as keyof typeof categoryIcons];
+            const Icon =
+              categoryIcons[category.id as keyof typeof categoryIcons] ?? BookOpen;
             const isExpanded = expandedCategories.includes(category.id);
 
             return (
@@ -200,8 +217,10 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
                     {category.posts.map((postId) => {
                       const currentPath = location?.pathname || "/";
                       const targetPath = `/${postId}`;
-                      const isActive = currentPath === targetPath || (currentPath === "/" && postId === "introduction");
-                      
+                      const isActive =
+                        currentPath === targetPath ||
+                        (currentPath === "/" && postId === "introduction");
+
                       return (
                         <NavLink
                           key={postId}
@@ -214,9 +233,10 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
                               : "text-docs-nav-foreground hover:bg-accent"
                           )}
                         >
-                          {postId.split('-').map(word => 
-                            word.charAt(0).toUpperCase() + word.slice(1)
-                          ).join(' ')}
+                          {postId
+                            .split("-")
+                            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(" ")}
                         </NavLink>
                       );
                     })}

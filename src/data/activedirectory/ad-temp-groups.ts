@@ -4,7 +4,7 @@ export const adTempGroups: BlogPost = {
   id: "ad-temp-groups",
   title: "Temporary AD Group and Membership",
   category: "activedirectory",
-  content: `
+  body: `
 # Temporary AD Group and Membership
 
 Modern IT environments are dynamic. Administrators often need to grant privileges for a limited time—for example, to install software, perform a pilot test or allow a vendor to configure a system. Unfortunately, human nature means that temporary permissions are seldom revoked when the job is done. Forgotten accounts and unused groups are common vectors for lateral movement during an attack. Active Directory offers two solutions to this problem: **temporary (dynamic) groups** and **temporary group membership**.

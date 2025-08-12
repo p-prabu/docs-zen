@@ -22,29 +22,31 @@ Because dynamic objects cannot be converted back to regular objects, and because
 Imagine you need to install an enterprise application that requires Domain-Admin rights to register service connection points or perform schema updates. Granting Domain-Admin rights permanently is risky, and remembering to remove those rights later is easy to forget. A better pattern is to create a dynamic group, make it a member of the "Domain Admins" group, and add your installers to the dynamic group. Once the TTL expires, the installation accounts no longer have elevated rights and the group itself vanishes.
 
 Here is a sample PowerShell script that creates such a group with a 15-minute lifetime:
+/n
 <span style="color:#1d4ed8;font-style:italic">
 
   _# How long should the group live?_
-  _$TTLMinutes = 15_ \n
-  _$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds_ \n
-  _# Bind to the destination OU_ \n
-  _$destinationOu = "OU=TempGroups,DC=contoso,DC=com"_ \n
-  _$destinationOuObject = [ADSI]("LDAP://$destinationOu")_ \n
-  _# Create the dynamic group_ \n
-  _$GroupName = "AppInstallTeam"_ \n
-  _$TempGroup = $destinationOuObject.Create("group", "CN=$GroupName")_ \n
+  _$TTLMinutes = 15_ 
+  _$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds_ 
+  _# Bind to the destination OU_ 
+  _$destinationOu = "OU=TempGroups,DC=contoso,DC=com"_ 
+  _$destinationOuObject = [ADSI]("LDAP://$destinationOu")_ 
+  _# Create the dynamic group_ 
+  _$GroupName = "AppInstallTeam"_ 
+  _$TempGroup = $destinationOuObject.Create("group", "CN=$GroupName")_ 
   _$TempGroup.PutEx(2, "objectClass", @("dynamicObject", "group"))_ 
-  _$TempGroup.Put("entryTTL", $TTLSeconds)_ \n
-  _$TempGroup.Put("sAMAccountName", $GroupName)_ \n
-  _$TempGroup.Put("displayName", "Application Installation Team")_ \n
+  _$TempGroup.Put("entryTTL", $TTLSeconds)_ 
+  _$TempGroup.Put("sAMAccountName", $GroupName)_
+  _$TempGroup.Put("displayName", "Application Installation Team")_
   _$expiryTime = (Get-Date).AddSeconds($TTLSeconds)_
-  _$TempGroup.Put("description", "Will be deleted at $expiryTime (UTC)")_ \n
-  _$TempGroup.SetInfo()_ \n
-  _# Add the installers to this dynamic group and nest it into Domain Admins_ \n
-  _Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"_ \n
-  _Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName_ \n
+  _$TempGroup.Put("description", "Will be deleted at $expiryTime (UTC)")_
+  _$TempGroup.SetInfo()_ 
+  _# Add the installers to this dynamic group and nest it into Domain Admins_ 
+  _Add-ADGroupMember -Identity $GroupName -Members "Alice","Bob"_ 
+  _Add-ADGroupMember -Identity "Domain Admins" -Members $GroupName_ 
   
 </span>
+/n
 After 15 minutes (or the configured minimum), this group will be removed, and the installers will lose their elevated rights.
 
 ## Scenario 2: pilot testing or proof-of-concept

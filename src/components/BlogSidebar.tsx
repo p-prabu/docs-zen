@@ -3,12 +3,9 @@ import {
   ChevronRight,
   ChevronDown,
   BookOpen,
-  Code,
   Settings,
-  FileText,
   Search,
   X,
-  Menu,
   Shield,
   Terminal,
   FolderCog,
@@ -16,6 +13,7 @@ import {
   Brain,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { blogCategories, blogPosts, type BlogPost } from "@/data/blog-posts";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,6 +51,7 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
   useEffect(() => {
     if (searchQuery.trim()) {
       const results: BlogPost[] = [];
+      Object.values(blogPosts).forEach((post: BlogPost) => {
         if (
           post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           post.body.toLowerCase().includes(searchQuery.toLowerCase())
@@ -186,8 +185,7 @@ export function BlogSidebar({ isOpen = true, onClose, className }: BlogSidebarPr
         {/* Navigation */}
         <nav className="space-y-2">
           {blogCategories.map((category) => {
-            const Icon =
-              categoryIcons[category.id as keyof typeof categoryIcons] ?? BookOpen;
+            const Icon = categoryIcons[category.id as keyof typeof categoryIcons] ?? BookOpen;
             const isExpanded = expandedCategories.includes(category.id);
 
             return (

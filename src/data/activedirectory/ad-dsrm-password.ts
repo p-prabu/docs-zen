@@ -60,8 +60,9 @@ The right approach depends on how many DCs you manage.
 
 ### **Option B – Sync From Domain Account**
 \`\`\`cmd
-   ntdsutil "set dsrm password" "sync from domain account DomainName \ DSRM-Sync-User" "quit" "quit"
+   ntdsutil "set dsrm password" "sync from domain account DSRM-Sync-User" "quit" "quit"
 \`\`\`
+or Note cmd is:  _ntdsutil "set dsrm password" "sync from domain account Domain\DSRM-Sync-User" "quit" "quit"_
 
 * This requires a **dedicated domain account** with no elevated privileges.
 * The DSRM password will match this account’s password across all DCs.

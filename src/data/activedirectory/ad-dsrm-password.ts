@@ -54,13 +54,13 @@ The right approach depends on how many DCs you manage.
 
 ### **Option A – Manual Per DC**
 \`\`\`cmd
-   ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
+ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
 \`\`\`
 (_server null_ = the DC you are on)
 
 ### **Option B – Sync From Domain Account**
 \`\`\`cmd
-   ntdsutil "set dsrm password" "sync from domain account DSRM-Sync-User" "quit" "quit"
+ntdsutil "set dsrm password" "sync from domain account DSRM-Sync-User" "quit" "quit"
 \`\`\`
 or Note cmd is:  _ntdsutil "set dsrm password" "sync from domain account Domain\DSRM-Sync-User" "quit" "quit"_
 
@@ -107,7 +107,8 @@ It’s not enough to set the password — you need to confirm it works **before*
    \`\`\`
 2. At logon, sign in as:
 
-   _.\Administrator_
+   .\Administrator or hostname\Administrator
+   note _hostname = domain controller name
 
    with your DSRM password.
 

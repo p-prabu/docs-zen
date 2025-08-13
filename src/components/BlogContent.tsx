@@ -45,7 +45,7 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group">
+      <div className="relative group" style={{ border: '2px solid orange' }}>
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -58,6 +58,7 @@ export function BlogContent({ post }: BlogContentProps) {
           language={match[1]}
           className="text-sm pr-8"
           customStyle={{
+            border: '2px solid purple',
             overflowX: 'auto',
           }}
           {...restProps}

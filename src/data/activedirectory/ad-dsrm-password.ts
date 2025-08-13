@@ -151,7 +151,7 @@ _(Less secure — use only briefly, then revert.)_
 
 ---
 
-## **Final Word**
+## **Conclusion**
 
 Whether you go with **unique-per-DC** or **sync-from-domain-account**, the goal is the same — a **known, tested, and recoverable DSRM password** for every Domain Controller you manage.
 It’s one of those admin tasks you won’t think about — until you desperately need it. And when that day comes, you’ll be glad you planned ahead.

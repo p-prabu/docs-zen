@@ -107,8 +107,9 @@ It’s not enough to set the password — you need to confirm it works **before*
    \`\`\`
 2. At logon, sign in as:
 
-   .\Administrator or hostname\Administrator
-   note _hostname = domain controller name
+ \`\`\`cmd
+   .\Administrator
+   \`\`\`
 
    with your DSRM password.
 

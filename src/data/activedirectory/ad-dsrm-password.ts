@@ -45,18 +45,43 @@ The right approach depends on how many DCs you manage.
 ## **2. Resetting the DSRM Password**
 
 ### **Option A – Manual Per DC**
-
-_ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"_
-
+\`\`\`cmd
+ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
+\`\`\`
 (_server null_ = the DC you are on)
 
 ### **Option B – Sync From Domain Account**
+\`\`\`cmd
+ntdsutil "set dsrm password" "sync from domain account CONTOSO\DSRM-Sync-User" "quit" "quit"
+\`\`\`
 
-_ntdsutil "set dsrm password" "sync from domain account CONTOSO\DSRM-Sync-User" "quit" "quit"_
+* This requires a **dedicated domain account** with no elevated privileges.
+* The DSRM password will match this account’s password across all DCs.
+* Use this method if you have many DCs and want to avoid managing unique passwords.
 
-* Run locally on each DC or automate with PowerShell and _Invoke-Command_.
-* Use a **dedicated** account just for DSRM sync.
-* Store that account’s password in the vault.
+### **Example PowerShell Script for Sync Method**
+
+Here’s a quick PowerShell script to set the DSRM password across all DCs using the sync method:
+
+\`\`\`powershell
+$domainAccount = "CONTOSO\DSRM-Sync-User"
+$dcList = Get-ADDomainController -Filter *
+
+foreach ($dc in $dcList) {
+    Invoke-Command -ComputerName $dc.HostName -ScriptBlock {
+        ntdsutil "set dsrm password" "sync from domain account $using:domainAccount"
+    }
+}
+\`\`\`
+
+* This script retrieves all domain controllers and runs the DSRM sync command on each.
+* Ensure you run this with appropriate permissions.
+
+### **Important Notes**
+
+- **Run as Administrator**: You must run these commands with elevated privileges.
+- **Backup First**: Always ensure you have a backup of your AD before making changes.
+- **Test in a Lab**: If possible, test the DSRM password reset process in a lab environment first.
 
 ---
 
@@ -67,10 +92,10 @@ It’s not enough to set the password — you need to confirm it works **before*
 ### **A. Offline Test (Most Reliable)**
 
 1. Set the DC to boot into DSRM:
-
-   _bcdedit /set safeboot dsrepair_  
-   _shutdown /r /f /t 5_
-
+   \`\`\`cmd
+   bcdedit /set safeboot dsrepair  
+   shutdown /r /f /t 5
+   \`\`\`
 2. At logon, sign in as:
 
    _.\Administrator_
@@ -78,25 +103,27 @@ It’s not enough to set the password — you need to confirm it works **before*
    with your DSRM password.
 
 3. **Revert safeboot afterward** to normal boot:
-
-   _bcdedit /deletevalue safeboot_  
-   _shutdown /r /f /t 5_
+   \`\`\`cmd
+   bcdedit /deletevalue safeboot  
+   shutdown /r /f /t 5
+   \`\`\`
 
 ### **B. Online Test (Quick Check)**
 
 _(Less secure — use only briefly, then revert.)_
 
 1. Temporarily allow DSRM login in normal mode:
-
-   _reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 2 /f_
-
+   \`\`\`powershell
+   reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 2 /f
+   \`\`\`
 2. Log off and sign in as:
-
-   _.\Administrator_
-
+   \`\`\`cmd
+   .\Administrator
+   \`\`\`
 3. **Revert registry to default (0) after testing**:
-
-   _reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 0 /f_
+   \`\`\`powershell
+   reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa /v DsrmAdminLogonBehavior /t REG_DWORD /d 0 /f
+   \`\`\`
 
 ---
 
@@ -116,7 +143,6 @@ _(Less secure — use only briefly, then revert.)_
 ## **Final Word**
 
 Whether you go with **unique-per-DC** or **sync-from-domain-account**, the goal is the same — a **known, tested, and recoverable DSRM password** for every Domain Controller you manage.
-
 It’s one of those admin tasks you won’t think about — until you desperately need it. And when that day comes, you’ll be glad you planned ahead.
 `,
   headings: [

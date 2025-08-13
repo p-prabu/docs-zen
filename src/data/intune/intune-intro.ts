@@ -4,8 +4,8 @@ export const intuneIntro: BlogPost = {
   id: "intune-intro",
   title: "Introduction to Microsoft Intune",
   category: "intune",
-  body: `
-# Introduction to Microsoft Intune
+  body: `# Introduction to Microsoft Intune
+
   _Published: Aug 03, 2025_
 Microsoft Intune is a cloud-based mobile device management (MDM) and mobile application management (MAM) service that enables organizations to manage devices and applications securely.
 

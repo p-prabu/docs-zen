@@ -26,6 +26,7 @@ export const adDsrmPassword: BlogPost = {
 Key fact:
 DSRM passwords can only be reset while DCs are running normally.
 If AD DS is already down, you can’t change it — a true chicken-and-egg problem.
+
 Let’s make sure that never happens to you.
 
 ---
@@ -53,13 +54,13 @@ The right approach depends on how many DCs you manage.
 
 ### **Option A – Manual Per DC**
 \`\`\`cmd
-ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
+   ntdsutil "set dsrm password" "reset password on server null" "quit" "quit"
 \`\`\`
 (_server null_ = the DC you are on)
 
 ### **Option B – Sync From Domain Account**
 \`\`\`cmd
-ntdsutil "set dsrm password" "sync from domain account CONTOSO\DSRM-Sync-User" "quit" "quit"
+   ntdsutil "set dsrm password" "sync from domain account DomainName \ DSRM-Sync-User" "quit" "quit"
 \`\`\`
 
 * This requires a **dedicated domain account** with no elevated privileges.

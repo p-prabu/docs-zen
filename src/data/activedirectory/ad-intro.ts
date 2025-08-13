@@ -4,9 +4,10 @@ export const adIntro: BlogPost = {
   id: "ad-intro",
   title: "Introduction to Active Directory",
   category: "activedirectory",
-  body: `
-# Introduction to Active Directory
+  body: `# Introduction to Active Directory
 
+   _Published: Aug 11, 2025_
+   
 Welcome to our comprehensive documentation on Microsoft Active Directory (AD). This guide will help you understand the fundamentals of Active Directory and how it plays a critical role in enterprise IT environments.
 
 ## What is Active Directory?

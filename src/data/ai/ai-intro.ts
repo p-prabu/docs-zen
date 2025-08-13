@@ -6,6 +6,8 @@ export const aiIntro: BlogPost = {
   category: "AI",
   body: `# Introduction to Artificial Intelligence
 
+  _Published: Aug 06, 2025_
+
 Artificial Intelligence (AI) represents one of the most transformative technologies of our time, fundamentally changing how we interact with computers and automate complex tasks.
 
 ## What is Artificial Intelligence?

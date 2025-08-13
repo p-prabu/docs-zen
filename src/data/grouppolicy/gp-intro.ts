@@ -7,6 +7,8 @@ export const gpIntro: BlogPost = {
   body: `
 # Introduction to Group Policy
 
+  _Published: Aug 04, 2025_
+
 Group Policy is a Windows feature that provides centralized management and configuration of operating systems, applications, and user settings in an Active Directory environment.
 
 ## What is Group Policy?

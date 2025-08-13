@@ -4,8 +4,9 @@ export const adSchema: BlogPost = {
   id: "ad-schema",
   title: "Active Directory Schema",
   category: "activedirectory",
-  body: `
-# Active Directory Schema
+  body: `# Active Directory Schema
+
+   _Published: Aug 07, 2025_
 
 The Active Directory schema defines the structure and rules for objects that can be stored in the Active Directory database. Understanding the schema is crucial for extending and customizing your AD environment.
 

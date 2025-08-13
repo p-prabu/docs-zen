@@ -7,7 +7,7 @@ export const adDsrmPassword: BlogPost = {
   category: "activedirectory",
   body: `# **Getting DSRM Password Control**
 
-  _Published: Aug 11, 2025_
+  _Published: Aug 14, 2025_
 
 There will come a day in almost every AD admin’s career when you have to boot a Domain Controller into **Directory Services Restore Mode (DSRM)** — maybe for an authoritative restore, repairing the AD database, or performing offline maintenance.
 

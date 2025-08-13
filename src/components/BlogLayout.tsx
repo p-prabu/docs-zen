@@ -73,7 +73,7 @@ export function BlogLayout() {
         title={post.title}
       />
       
-      <div className="flex flex-1 overflow-hidden" style={{ border: '2px solid red' }}>
+      <div className="flex flex-1 overflow-hidden">
         {/* Mobile Overlay */}
         {isMobile && isSidebarOpen && (
           <div 
@@ -92,8 +92,8 @@ export function BlogLayout() {
         </div>
         
         {/* Main Content */}
-        <div className="flex flex-1 min-h-0 min-w-0" style={{ border: '2px solid blue' }}>
-          <div className="flex-1 overflow-y-auto" style={{ border: '2px solid green' }}>
+        <div className="flex flex-1 min-h-0 min-w-0">
+          <div className="flex-1 overflow-y-auto">
             <BlogContent post={post} />
             <Comments postId={post.id} />
           </div>

@@ -12,6 +12,7 @@ import { intuneIntro } from './intune/intune-intro';
 import { aiIntro } from './ai/ai-intro';
 import { adDsrmPassword } from './activedirectory/ad-dsrm-password';
 import { adHealthCheck } from './activedirectory/ad-health-check';
+import { psOutFile } from "./powershell/powershell-out-file";
 
 
 export interface BlogPost {
@@ -36,7 +37,7 @@ export const blogCategories = [
   {
     id: "powershell",
     title: "PowerShell",
-    posts: ["ps-intro", "ps-writehtml"]
+    posts: ["ps-intro", "ps-writehtml", "ps-outfile"]
   },
   {
     id: "grouppolicy",
@@ -71,6 +72,7 @@ export const blogPosts: Record<string, BlogPost> = {
   // PowerShell posts
   "ps-intro": psIntro,
   "ps-writehtml": psWriteHTML,
+  "ps-outfile": psOutFile,
   
   // Group Policy posts
   "gp-intro": gpIntro,

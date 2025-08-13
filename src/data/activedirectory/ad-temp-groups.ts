@@ -3,9 +3,9 @@ import { BlogPost } from '../blog-posts';
 
 export const adTempGroups: BlogPost = {
   id: "ad-temp-groups",
-  title: "Temporary AD Group and Membership",
+  title: "Temporary Group Membership",
   category: "activedirectory",
-  body: `# Temporary Groups and Temporary Group Membership in Active Directory
+  body: `# Temporary Groups and Group Membership in Active Directory
 
 _Published: Aug 13, 2025_
 

@@ -2,7 +2,7 @@ import { BlogPost } from '../blog-posts';
 
 export const psWriteHTML: BlogPost = {
   id: "ps-writehtml",
-  title: "PSWriteHTML – Transforming PowerShell Reports into Interactive Dashboards",
+  title: "PSWriteHTML –Interactive Dashboards",
   category: "powershell",
   body: `
 # PSWriteHTML – Transforming PowerShell Reports into Interactive Dashboards

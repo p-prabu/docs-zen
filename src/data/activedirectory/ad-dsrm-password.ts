@@ -9,16 +9,23 @@ export const adDsrmPassword: BlogPost = {
 
   _Published: Aug 14, 2025_
 
-There will come a day in almost every AD admin’s career when you have to boot a Domain Controller into **Directory Services Restore Mode (DSRM)** — maybe for an authoritative restore, repairing the AD database, or performing offline maintenance.
+ In today’s world, we use biometric logins, PINs, passwordless sign-ins, and passkeys.
+ It’s easy to forget the old-school passwords.
 
-When that day comes, you’ll need the **local DSRM Administrator password**. And here’s the reality: too often, teams get stuck because no one remembers it.
+ But in Active Directory disaster recovery, one old-school password still matters: the DSRM (Directory Services Restore Mode) password.
 
-* It was set by an admin who’s long gone.
-* It was configured during DC promotion years ago and never documented.
-* It was never updated, and the vault entry (if one exists) is empty.
+ Every AD admin will eventually face a moment when a Domain Controller won’t start normally.
+ To repair AD, you’ll boot into DSRM — and if you don’t have that password, you’re stuck. 🥸
 
-To make matters worse, the DSRM password can **only** be reset while the DC is running normally. If AD DS won’t start and you don’t have the password, you’ve got yourself a classic **chicken-and-egg problem**.
+ Why this happens:
+	•	It was set by an admin who left years ago.
+	•	It was never documented.
+	•	It hasn’t been tested in years.
+	•	The DC has never crashed, so no one realised it was missing.
 
+Key fact:
+DSRM passwords can only be reset while DCs are running normally.
+If AD DS is already down, you can’t change it — a true chicken-and-egg problem.
 Let’s make sure that never happens to you.
 
 ---

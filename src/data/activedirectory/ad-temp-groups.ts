@@ -26,7 +26,7 @@ Here is a sample PowerShell script that creates such a group with a 15-minute li
 <span style="color:#1d4ed8;font-style:italic">
 
   _# How long should the group live?_
-  _$TTLMinutes = 15_ 
+  _$TTLMinutes = 15_    
   _$TTLSeconds = [int](New-TimeSpan -Minutes $TTLMinutes).TotalSeconds_ 
   _# Bind to the destination OU_ 
   _$destinationOu = "OU=TempGroups,DC=contoso,DC=com"_ 

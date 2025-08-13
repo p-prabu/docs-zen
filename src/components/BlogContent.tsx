@@ -45,7 +45,7 @@ export function BlogContent({ post }: BlogContentProps) {
     };
 
     return !inline && match ? (
-      <div className="relative group overflow-x-auto w-full">
+      <div className="relative group" style={{ border: '2px solid orange' }}>
         <button
           onClick={handleCopy}
           aria-label="Copy code"
@@ -56,7 +56,11 @@ export function BlogContent({ post }: BlogContentProps) {
         <SyntaxHighlighter
           style={tomorrow}
           language={match[1]}
-          className="overflow-x-auto text-sm pr-8 w-full"
+          className="text-sm pr-8"
+          customStyle={{
+            border: '2px solid purple',
+            overflowX: 'auto',
+          }}
           {...restProps}
         >
           {codeString}

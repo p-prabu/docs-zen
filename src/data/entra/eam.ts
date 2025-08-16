@@ -17,6 +17,8 @@ Here's a breakdown of the differences and the evolution:
 
 The legacy tiering model focuses on protecting identity systems by creating buffer zones between full control of the environment (Tier 0) and high-risk workstation assets that attackers frequently compromise. This model typically divides all systems into three levels or tiers based on their sensitivity and administrative control.
 
+![Tier Model](/image/tiermodel.png)
+
 - **Tier 0:** This is the most secure and highest-privileged layer. It includes administrative accounts and systems that have direct or indirect control over enterprise identities and all assets within the Active Directory forest, domains, or domain controllers. Examples include Active Directory Domain Controllers, PKI systems, and Privileged Administrative Workstations (PAWs).
 - **Tier 1:** This tier covers administrative accounts that control enterprise servers and applications.
 - **Tier 2:** This tier comprises administrative accounts that manage end users, workstations, and devices. Helpdesk staff often fall into this tier.
@@ -27,13 +29,15 @@ A core principle of this model is that credentials from a higher-privileged tier
 
 The Enterprise Access Model (EAM) supersedes and replaces the legacy tier model. While the underlying principle of segregating administrative access remains the same, the EAM expands its scope to address the full access management requirements of modern enterprises, encompassing on-premises, multiple clouds, and various internal or external user and application access scenarios. Microsoft now refers to these as "levels of security" rather than "tiers".
 
+![EAM Model](/image/emamodel.png)
+
 The EAM organises the environment into four planes to reflect the evolving IT landscape:
 
 1.  **Control Plane:** This expands on Tier 0, encompassing all aspects of access control, including networking and legacy operational technology (OT) options. It is based on centralized enterprise identity system(s).
 2.  **Management Plane:** This splits from the old Tier 1, focusing on enterprise-wide IT management functions.
 3.  **Data/Workload Plane:** Also split from the old Tier 1, this focuses on per-workload management, which can be performed by IT personnel or business units. This split better accommodates developers and DevOps models.
 4.  **User Access:** This splits from the old Tier 2, covering all B2B, B2C, and public access scenarios.
-5.  **App Access:** Also split from the old Tier 2, this accommodates API access pathways and the resulting attack surface.
+5.  **App Access:** Also. split from the old Tier 2, this accommodates API access pathways and the resulting attack surface.
 
 ## Key Differences and Evolution
 

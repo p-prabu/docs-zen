@@ -5,6 +5,7 @@ import { adSchema } from './activedirectory/ad-schema';
 import { adTempGroups } from './activedirectory/ad-temp-groups';
 import { entraIntro } from './entra/entra-intro';
 import { entraOuVsAu } from './entra/entra-ou-vs-au';
+import { eam } from './entra/eam';
 import { psIntro } from './powershell/ps-intro';
 import { psWriteHTML } from './powershell/ps-writehtml';
 import { gpIntro } from './grouppolicy/gp-intro';
@@ -32,7 +33,7 @@ export const blogCategories = [
   {
     id: "entra",
     title: "Entra ID",
-    posts: ["entra-intro", "entra-ou-vs-au"]
+    posts: ["entra-intro", "entra-ou-vs-au", "eam"]
   },
   {
     id: "powershell",
@@ -68,6 +69,7 @@ export const blogPosts: Record<string, BlogPost> = {
   // Entra ID posts
   "entra-intro": entraIntro,
   "entra-ou-vs-au": entraOuVsAu,
+  "eam": eam, // ← add this
   
   // PowerShell posts
   "ps-intro": psIntro,

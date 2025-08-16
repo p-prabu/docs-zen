@@ -54,6 +54,7 @@ The EAM organises the environment into four planes to reflect the evolving IT la
 - **Implementation:** Implementing a tiering model, whether legacy or EAM, requires significant effort and perseverance, but it makes lateral movement by attackers very difficult, leading to a massive security gain. Despite the evolution, securing Active Directory through tiered administration is a critical prerequisite for implementing the enterprise access model in most organisations due to the dependencies between Azure, Entra ID, and Active Directory.
 
 In essence, the EAM refines and extends the fundamental security principles of the legacy tiering model to better suit the complex, interconnected, and multi-faceted attack surfaces of contemporary IT infrastructures
+
 Reference: [EAM Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model)
 
 `,

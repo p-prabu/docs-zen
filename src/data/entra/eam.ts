@@ -27,7 +27,12 @@ A core principle of this model is that credentials from a higher-privileged tier
 
 ## Enterprise Access Model (EAM)
 
-The Enterprise Access Model (EAM) supersedes and replaces the legacy tier model. While the underlying principle of segregating administrative access remains the same, the EAM expands its scope to address the full access management requirements of modern enterprises, encompassing on-premises, multiple clouds, and various internal or external user and application access scenarios. Microsoft now refers to these as "levels of security" rather than "tiers".
+The Enterprise Access Model (EAM) supersedes and not fully replaces the legacy tier model. 
+becuase the legacy model primarily focused on on-premises Active Directory environments. 
+The EAM expands to cover hybrid and multi-cloud environments, including Azure
+While the underlying principle of segregating administrative access remains the same, 
+the EAM expands its scope to address the full access management requirements of modern enterprises, encompassing on-premises, multiple clouds, and various internal or external user and application access scenarios. 
+Microsoft now refers to these as "levels of security" rather than "tiers".
 
 ![EAM Model](/image/emamodel.png)
 
@@ -49,6 +54,8 @@ The EAM organises the environment into four planes to reflect the evolving IT la
 - **Implementation:** Implementing a tiering model, whether legacy or EAM, requires significant effort and perseverance, but it makes lateral movement by attackers very difficult, leading to a massive security gain. Despite the evolution, securing Active Directory through tiered administration is a critical prerequisite for implementing the enterprise access model in most organisations due to the dependencies between Azure, Entra ID, and Active Directory.
 
 In essence, the EAM refines and extends the fundamental security principles of the legacy tiering model to better suit the complex, interconnected, and multi-faceted attack surfaces of contemporary IT infrastructures
+Reference: [EAM Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model)
+
 `,
   headings: [
     { id: "legacy-tiering-model", text: "Legacy Tiering Model", level: 2 },

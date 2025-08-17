@@ -4,7 +4,7 @@ export const adSchema: BlogPost = {
   id: "ad-schema",
   title: "Active Directory Schema",
   category: "activedirectory",
-  body: `# Active Directory Schema
+  body: `
 
    _Published: Aug 07, 2025_
 

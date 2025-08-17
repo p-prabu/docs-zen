@@ -5,7 +5,7 @@ export const entraIntro: BlogPost = {
   title: "Introduction to Microsoft Entra ID",
   category: "entra",
   body: `
-# Introduction to Microsoft Entra ID
+
 
   _Published: Aug 05, 2025_
 

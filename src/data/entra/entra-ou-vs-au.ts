@@ -5,7 +5,6 @@ export const entraOuVsAu: BlogPost = {
   title: "OU vs AU",
   category: "entra",
   body: `
-# OU vs AU
 
 _Published: Aug 11, 2025_
 

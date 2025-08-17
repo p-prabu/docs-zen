@@ -6,7 +6,7 @@ export const adHealthCheck: BlogPost = {
   id: "ad-health-check",
   title: "AD Health Check",
   category: "activedirectory",
-  body: `# AD Health Check
+  body: `
 
 _Published: Aug 12, 2025_
 

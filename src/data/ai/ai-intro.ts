@@ -4,7 +4,7 @@ export const aiIntro: BlogPost = {
   id: "ai-intro",
   title: "Introduction to Artificial Intelligence",
   category: "AI",
-  body: `# Introduction to Artificial Intelligence
+  body: `
 
   _Published: Aug 06, 2025_
 

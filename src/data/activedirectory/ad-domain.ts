@@ -4,7 +4,7 @@ export const adDomain: BlogPost = {
   id: "ad-domain",
   title: "Active Directory Domains",
   category: "activedirectory",
-  body: ` # Active Directory Domains
+  body: `
 
 _Published: Aug 09, 2025_
 

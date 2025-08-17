@@ -5,7 +5,7 @@ export const eam: BlogPost = {
   title: "Enterprise Access Model (EAM)",
   category: "entra",
   body: `
-# Enterprise Access Model (EAM)
+
 
 _Published: Aug 16, 2025_
 

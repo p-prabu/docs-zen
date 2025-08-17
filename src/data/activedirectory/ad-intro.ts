@@ -4,7 +4,7 @@ export const adIntro: BlogPost = {
   id: "ad-intro",
   title: "Introduction to Active Directory",
   category: "activedirectory",
-  body: `# Introduction to Active Directory
+  body: `
 
    _Published: Aug 11, 2025_
    

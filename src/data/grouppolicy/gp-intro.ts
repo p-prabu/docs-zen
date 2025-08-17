@@ -5,7 +5,7 @@ export const gpIntro: BlogPost = {
   title: "Introduction to Group Policy",
   category: "grouppolicy",
   body: `
-# Introduction to Group Policy
+
 
   _Published: Aug 04, 2025_
 

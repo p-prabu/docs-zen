@@ -6,11 +6,14 @@ import { MobileHeader } from "./MobileHeader";
 import { blogPosts } from "@/data/blog-posts";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ReadingProgress } from "./ReadingProgress";
+import { cn } from "@/lib/utils";
 
 export function BlogLayout() {
   const { postId } = useParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   
   const post = postId ? blogPosts[postId] : blogPosts["ad-intro"];
 
@@ -68,6 +71,7 @@ export function BlogLayout() {
 
   return (
     <div className="flex flex-col h-screen bg-background">
+      <ReadingProgress />
       <MobileHeader 
         onMenuClick={() => setIsSidebarOpen(true)} 
         title={post.title}
@@ -83,10 +87,12 @@ export function BlogLayout() {
         )}
         
         {/* Sidebar */}
-        <div id="mobile-sidebar">
+        <div id="mobile-sidebar" className={cn("transition-all duration-300 ease-in-out", !isMobile && (isSidebarCollapsed ? "w-20" : "w-64"))}>
           <BlogSidebar 
             isOpen={isSidebarOpen || !isMobile} 
             onClose={() => setIsSidebarOpen(false)}
+            isCollapsed={isSidebarCollapsed}
+            setIsCollapsed={setIsSidebarCollapsed}
             className={isMobile ? "md:relative" : ""}
           />
         </div>

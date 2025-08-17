@@ -3,14 +3,18 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Share2 } from "lucide-react";
 import type { BlogPost } from "@/data/blog-posts";
+import { useToast } from "./ui/use-toast";
+import { Button } from "./ui/button";
 
 interface BlogContentProps {
   post: BlogPost;
 }
 
 export function BlogContent({ post }: BlogContentProps) {
+  const { toast } = useToast();
+
   useEffect(() => {
     // Add IDs to headings for table of contents navigation
     const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -20,6 +24,23 @@ export function BlogContent({ post }: BlogContentProps) {
       }
     });
   }, [post]);
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link Copied",
+        description: "The blog post link has been copied to your clipboard.",
+      });
+    } catch (err) {
+      console.error("Failed to copy link", err);
+      toast({
+        title: "Error",
+        description: "Failed to copy the blog post link.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const CodeBlock = (
     props: {
@@ -78,6 +99,14 @@ export function BlogContent({ post }: BlogContentProps) {
   return (
     <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8 overflow-y-auto">
       <div className="prose prose-sm md:prose-lg max-w-none">
+        <div className="flex justify-between items-center mb-6 mt-8 first:mt-0">
+          <h1 className="text-4xl font-bold text-foreground m-0">
+            {post.title}
+          </h1>
+          <Button variant="outline" size="icon" onClick={handleShare}>
+            <Share2 className="h-4 w-4" />
+          </Button>
+        </div>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
           components={{
@@ -91,6 +120,7 @@ export function BlogContent({ post }: BlogContentProps) {
               <h2 className="text-3xl font-semibold text-foreground mb-4 mt-8 border-b border-border pb-2">
                 {children}
               </h2>
+
             ),
             h3: ({ children }) => (
               <h3 className="text-2xl font-semibold text-foreground mb-3 mt-6">

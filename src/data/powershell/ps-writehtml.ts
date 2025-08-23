@@ -12,6 +12,8 @@ In the world of IT automation, reporting is as important as the scripts that gat
 
 Whether you're building a quick one-page server report or a full-fledged interactive dashboard, PSWriteHTML gives you the tools to create beautiful, responsive HTML content straight from PowerShell.
 
+![PSWriteHTML](/image/pswriteHtml.png)
+
 ## A Quick Background
 
 PSWriteHTML is the successor to the older **ReportHTML** module. Its author, Przemysław Kłys (a.k.a. *MadBoyEvo*), rebuilt it from the ground up to address performance limitations and bring in modern features.
@@ -83,7 +85,9 @@ PSWriteHTML takes the heavy lifting out of HTML report creation. By giving Power
 If you're ready to take your PowerShell reports to the next level, install PSWriteHTML today and explore its possibilities—you might be surprised how quickly you can turn plain text output into a tool your colleagues actually *want* to read.
 
 **🔗 PowerShell Report:** [https://evotec.xyz/advanced-html-reporting-using-powershell/] (https://evotec.xyz/advanced-html-reporting-using-powershell/)
+
 **🔗 GitHub:** [https://github.com/EvotecIT/PSWriteHTML](https://github.com/EvotecIT/PSWriteHTML)
+
 **📦 PowerShell Gallery:** [https://www.powershellgallery.com/packages/PSWriteHTML](https://www.powershellgallery.com/packages/PSWriteHTML)
     `,
   headings: [

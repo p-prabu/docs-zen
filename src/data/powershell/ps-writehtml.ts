@@ -6,7 +6,7 @@ export const psWriteHTML: BlogPost = {
   category: "powershell",
   body: `
 
-_Published: Aug 01, 2025_
+_Published: Aug 23, 2025_
 
 In the world of IT automation, reporting is as important as the scripts that gather the data. Clear, well-designed reports not only make your work look professional, they help decision-makers understand complex data at a glance. **PSWriteHTML** is a PowerShell module that makes this possible—without requiring you to learn HTML, CSS, or JavaScript.
 

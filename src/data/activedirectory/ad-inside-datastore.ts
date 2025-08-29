@@ -6,7 +6,6 @@ export const adDsDatastoreLayout: BlogPost = {
   title: "Active Directory (ESE) Datastore Layout",
   category: "activedirectory",
   body: `
-## Active Directory (ESE) Datastore Layout
 
 ![ActiveDirectoryDatastoreLayout](/image/addatastore.png)
 

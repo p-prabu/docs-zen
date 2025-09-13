@@ -3,7 +3,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adPartitions: BlogPost = {
   id: "ad-naming-contexts-partitions",
-  title: "Understanding Active Directory Partitions",
+  title: "AD Partitions",
   category: "activedirectory",
   body: `
   _Published: Sep 13, 2025_

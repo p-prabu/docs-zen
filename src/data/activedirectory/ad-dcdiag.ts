@@ -27,18 +27,37 @@ dcdiag is critical for maintaining a healthy Active Directory environment becaus
 
 ## Quick Reference (Cheat Sheet)
 
-| Command                                                  | What it Does                                              | When to Use                                      |
-| :------------------------------------------------------- | :-------------------------------------------------------- | :----------------------------------------------- |
-| \`dcdiag /q\`                                                | Runs default tests and shows **errors only**.             | Daily quick scan                                 |
-| \`dcdiag /e /v /c /d /f:C:\\Reports\\DCDiag_Full.txt\`      | Forest-wide, verbose, and comprehensive with debug output.| Weekly/monthly deep health check                 |
-| \`dcdiag /a\`                                                | Tests **all DCs in the current domain**.                  | Domain-only checks                               |
-| \`dcdiag /s:DC1 /test:Replications /v\`                      | Checks replication health for **one specific DC**.        | Partner/failed link triage                       |
-| \`dcdiag /test:FsmoCheck /v\`                                | Validates **FSMO role holders**.                          | Role move or outage checks                       |
-| \`dcdiag /s:DC2 /test:Advertising /v\`                       | Ensures a DC advertises its services (GC/KDC/LDAP/DNS). | Logon or authentication issues                   |
-| \`dcdiag /test:DNS /dnsall /v\`                              | Performs **deep DNS diagnostics** across all DNS servers. | For SRV record, stale, or missing DNS entries    |
-| \`dcdiag /test:NetLogons /test:SysVolCheck /v\`              | Verifies SYSVOL and Netlogon shares.                      | Issues with Group Policy application             |
-| \`dcdiag /s:DC1 /site:EuropeSite /test:Connectivity /v\`     | Validates site-scoped connectivity.                       | WAN or site outages                              |
-| \`dcdiag /v ^\| Select-String "Warning"\`                    | Displays **warnings only** (filtered via PowerShell).     | To quickly filter for non-critical issues        |
+
+* **\`dcdiag /q\`**
+    * **What it Does:** Runs default tests and shows **errors only**.
+    * **When to Use:** Daily quick scan
+* **\`dcdiag /e /v /c /d /f:C:\\Reports\\DCDiag_Full.txt\`**
+    * **What it Does:** Forest-wide, verbose, and comprehensive with debug output, saving to file.
+    * **When to Use:** Weekly/monthly deep health check
+* **\`dcdiag /a\`**
+    * **What it Does:** Tests **all DCs in the current domain**.
+    * **When to Use:** Domain-only checks
+* **\`dcdiag /s:DC1 /test:Replications /v\`**
+    * **What it Does:** Checks replication health for **one specific DC**.
+    * **When to Use:** Partner/failed link triage
+* **\`dcdiag /test:FsmoCheck /v\`**
+    * **What it Does:** Validates **FSMO role holders**.
+    * **When to Use:** Role move or outage checks
+* **\`dcdiag /s:DC2 /test:Advertising /v\`**
+    * **What it Does:** Ensures a DC advertises its services (GC/KDC/LDAP/DNS).
+    * **When to Use:** Logon or authentication issues
+* **\`dcdiag /test:DNS /dnsall /v\`**
+    * **What it Does:** Performs **deep DNS diagnostics** across all DNS servers.
+    * **When to Use:** For SRV record, stale, or missing DNS entries
+* **\`dcdiag /test:NetLogons /test:SysVolCheck /v\`**
+    * **What it Does:** Verifies SYSVOL and Netlogon shares.
+    * **When to Use:** Issues with Group Policy application
+* **\`dcdiag /s:DC1 /site:EuropeSite /test:Connectivity /v\`**
+    * **What it Does:** Validates site-scoped connectivity.
+    * **When to Use:** WAN or site outages
+* **\`dcdiag /v ^\| Select-String "Warning"\`**
+    * **What it Does:** Displays **warnings only** (filtered via PowerShell).
+    * **When to Use:** To quickly filter for non-critical issues
 
 ---
 

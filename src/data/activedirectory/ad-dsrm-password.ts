@@ -3,7 +3,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adDsrmPassword: BlogPost = {
   id: "ad-dsrm-password",
-  title: "Getting DSRM Password Control",
+  title: "DSRM Password Control",
   category: "activedirectory",
   body: `
 

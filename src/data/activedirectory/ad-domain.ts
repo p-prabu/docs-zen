@@ -2,7 +2,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adDomain: BlogPost = {
   id: "ad-domain",
-  title: "Active Directory Domains",
+  title: "AD Domains",
   category: "activedirectory",
   body: `
 

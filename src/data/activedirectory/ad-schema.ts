@@ -2,7 +2,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adSchema: BlogPost = {
   id: "ad-schema",
-  title: "Active Directory Schema",
+  title: "AD Schema",
   category: "activedirectory",
   body: `
 

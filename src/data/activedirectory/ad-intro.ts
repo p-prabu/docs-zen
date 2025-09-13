@@ -2,7 +2,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adIntro: BlogPost = {
   id: "ad-intro",
-  title: "Introduction to Active Directory",
+  title: "Introduction to AD",
   category: "activedirectory",
   body: `
 

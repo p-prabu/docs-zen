@@ -3,7 +3,7 @@ import { BlogPost } from '../blog-posts';
 
 export const adDsDatastoreLayout: BlogPost = {
   id: "ad-ds-datastore-layout",
-  title: "Active Directory (ESE) Datastore Layout",
+  title: "AD (ESE) Datastore Layout",
   category: "activedirectory",
   body: `
 

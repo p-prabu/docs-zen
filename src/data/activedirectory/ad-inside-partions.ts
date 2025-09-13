@@ -6,6 +6,8 @@ export const adPartitions: BlogPost = {
   title: "Understanding Active Directory Partitions",
   category: "activedirectory",
   body: `
+
+![ActiveDirectoryDatastoreLayout](/image/ad-partions.png)
 Active Directory stores its data in a structured way across four logical sections, or **Naming Contexts (NCs)**, also known as partitions. Each partition has a distinct role, scope of replication, and a typical management tool. Understanding these partitions is fundamental to managing and troubleshooting Active Directory.
 
 ---

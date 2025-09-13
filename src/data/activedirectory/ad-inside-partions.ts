@@ -2,8 +2,8 @@
 import { BlogPost } from '../blog-posts';
 
 export const adPartitions: BlogPost = {
-  id: "ad-naming-contexts-partitions",
-  title: "AD Partitions",
+  id: "ad-naming-contexts-partions",
+  title: "AD Partions",
   category: "activedirectory",
   body: `
   _Published: Sep 13, 2025_

@@ -8,7 +8,7 @@ export const adlogicalPhysical: BlogPost = {
 
   ![ActiveDirectoryDatastoreLayout](/image/Login-Physical-components.png)
 
-   _Published: Aug 18, 2025_
+   _Published: Sep 20, 2025_
    
 Active Directory is a powerful directory service, and its structure is built on a combination of **logical** and **physical** components. The logical components define the organizational hierarchy and relationships, while the physical components are the actual servers and network elements that make the directory service run. Understanding the difference between these is key to managing an AD environment effectively.
 

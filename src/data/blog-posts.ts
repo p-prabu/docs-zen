@@ -16,6 +16,7 @@ import { adHealthCheck } from './activedirectory/ad-health-check';
 import { adDsDatastoreLayout } from './activedirectory/ad-inside-datastore';
 import { dcdiagAdvancedCommands } from './activedirectory/ad-dcdiag';
 import { adPartitions } from './activedirectory/ad-inside-partions';
+import { adlogicalPhysical } from './activedirectory/ad-inside-logic-phys';
 
 
 
@@ -31,7 +32,7 @@ export const blogCategories = [
   {
     id: "activedirectory",
     title: "Active Directory",
-    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password","ad-health-check","ad-ds-datastore-layout","ad-naming-contexts-partions","dcdiag-advanced-commands"]
+    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password","ad-health-check","ad-ds-datastore-layout","ad-naming-contexts-partions","dcdiag-advanced-commands","ad-inside-logic-phys"]
   },
   {
     id: "entra",
@@ -71,6 +72,7 @@ export const blogPosts: Record<string, BlogPost> = {
   "ad-ds-datastore-layout": adDsDatastoreLayout, // ← add this
   "dcdiag-advanced-commands": dcdiagAdvancedCommands, // ← add this
   "ad-naming-contexts-partions": adPartitions, // ← add this
+  "ad-inside-logic-phys": adlogicalPhysical, // ← add this
 
   
   // Entra ID posts

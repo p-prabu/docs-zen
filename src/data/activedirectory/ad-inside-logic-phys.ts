@@ -1,7 +1,7 @@
 import { BlogPost } from '../blog-posts';
 
-export const adArchitecture: BlogPost = {
-  id: "ad-logicalPhysical",
+export const adlogicalPhysical: BlogPost = {
+  id: "ad-inside-logic-phys",
   title: "Logical vs Physical Components",
   category: "activedirectory",
   body: `

@@ -5,6 +5,9 @@ export const adReplication: BlogPost = {
   title: "Active Directory Replication",
   category: "activedirectory",
   body: `
+
+    ![ActiveDirectoryDatastoreLayout](/image/replication.png)
+
 _Published: Aug 11, 2025_
 
 Here are the key components that take part in replication:

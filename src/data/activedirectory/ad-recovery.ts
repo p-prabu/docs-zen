@@ -86,12 +86,7 @@ So, with two primary tools at our disposal, let's clarify when to use which.
 
 ### Head-to-Head: Recycle Bin vs. System State Restore
 
-| Feature | Active Directory Recycle Bin | System State Restore |
-| --- | --- | --- |
-| Best Use Case | Accidental Deletions | Disaster Recovery, GPO Restore |
-| Object Fidelity | Perfect - all attributes restored | Partial - group memberships lost |
-| Downtime | None | Yes - DC must be in DSRM mode |
-| Complexity | Low - single command/a few clicks | High - multi-step, command-line process |
+![ADReovery](/image/adrecovery-table.png)
 
 ### The GPO Recovery Scenario: A Perfect Example
 

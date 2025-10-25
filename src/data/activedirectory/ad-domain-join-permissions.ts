@@ -10,21 +10,22 @@ _Published: OCT 25, 2025_
 
 ### Domain join
 
-As an Active Directory administrator, I often need to tidy up OU permissions—especially the domain join rights that quietly pile up over time.
+As an Active Directory administrator, I often need to tidy up OU permissions—especially the domain join rights that some time.
 
-In my own environments I’ve seen admin who can join a computer just fine, but when they try to **rejoin with the same AD object**, the behavior is hit or miss.
+In my own experience, I’ve seen admin who can join a computer just fine, but when they try to **rejoin with the same AD object**, the behavior is hit or miss.
 
 If the user or group has **full permissions** on the computer object delegation, rejoin attempts usually succeed.  
 When we get strict and grant only “Create Computer Object,” the rejoin fails because AD has no “recreate” right; it really expects “Delete Computer Object” plus the right kind of write permissions.  
 So we still aim for **least privilege**, but we have to pick the writes that make sense for the scenario.
 
-I run into this a lot during automated provisioning jobs (**SCCM**, **Ansible**, or similar) where the task sequence first joins the template name to the domain and later renames the machine. That rename must sync right back to Active Directory or the automation loop gets stuck.
+i hope, we all run into this sometime during automated provisioning jobs (**SCCM**, **Ansible**, or similar) where the task sequence first joins the template name to the domain and later renames the machine. That rename must sync right back to Active Directory
 
 Recently, Microsoft published an article that spells out **what permissions are required** for secure join/rejoin operations, and I validated the guidance in my **lab environment** while building out \`dsacls\`.
+- [Active Directory domain join permissions – Microsoft Docs (Updated Aug 26, 2025)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/active-directory-domain-join-permissions) 
 
-The script below addresses the exact pain I had, but every environment is different—treat it as guidance and always lab-test before rolling it into production.
+The script below addresses the exact pain I had, but every environment is different—treat it as guidance and always do lab-test before rolling or applying it into production.
 
-### Script and Technical Explanation
+### Script
 
 #### Disclaimer
 > **For knowledge-purposes only.**  
@@ -57,7 +58,9 @@ dsacls "OU=Testing" /I:S /G "Test\\ADGroupDomainJoin:RP"
 
 
 #### What This Script Does
-✅ Allows the delegated group (\`Test\\ADGroupDomainJoin\`) to:
+- Allows the delegated group (\`Test\\ADGroupDomainJoin\`) to:
+- OU "OU=Testing"
+- Domain name: Test 
 - Join **new computers** to the domain  
 - **Rejoin** existing computers using the same AD object  
 - **Rename** the computer from the local machine and reflect it in AD  

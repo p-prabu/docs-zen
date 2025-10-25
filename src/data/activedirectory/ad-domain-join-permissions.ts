@@ -67,7 +67,7 @@ dsacls "OU=Testing" /I:S /G "Test\\ADGroupDomainJoin:RP"
 
 ---
 
-### 3️⃣ Microsoft Reference Articles and Disclaimer
+### Microsoft Reference Articles and Disclaimer
 Below, I’ve left some **Microsoft reference documents** to understand the background, domain join process, and troubleshooting steps.
 
 ---
@@ -81,13 +81,13 @@ Below, I’ve left some **Microsoft reference documents** to understand the back
 ---
   `,
   headings: [
-    { id: "understanding-domain-join-permissions-in-active-directory", text: "🧩 Understanding Domain Join Permissions in Active Directory", level: 1 },
-    { id: "my-experience-and-explanation", text: "1️⃣ My Experience and Explanation", level: 3 },
-    { id: "script-and-technical-explanation", text: "2️⃣ Script and Technical Explanation", level: 3 },
+    { id: "understanding-domain-join-permissions-in-active-directory", text: "Understanding Domain Join Permissions in Active Directory", level: 1 },
+    { id: "my-experience-and-explanation", text: "1My Experience and Explanation", level: 3 },
+    { id: "script-and-technical-explanation", text: " Script and Technical Explanation", level: 3 },
     { id: "disclaimer", text: "Disclaimer", level: 4 },
     { id: "explanation-of-key-flags-and-permissions", text: "Explanation of Key Flags & Permissions", level: 4 },
     { id: "what-this-script-does", text: "What This Script Does", level: 4 },
-    { id: "microsoft-reference-articles-and-disclaimer", text: "3️⃣ Microsoft Reference Articles and Disclaimer", level: 3 },
+    { id: "microsoft-reference-articles-and-disclaimer", text: " Microsoft Reference Articles and Disclaimer", level: 3 },
     { id: "microsoft-references", text: "Microsoft References", level: 4 },
   ]
 };

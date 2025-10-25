@@ -3,6 +3,7 @@ import { adIntro } from './activedirectory/ad-intro';
 import { adDomain } from './activedirectory/ad-domain';
 import { adSchema } from './activedirectory/ad-schema';
 import { adTempGroups } from './activedirectory/ad-temp-groups';
+import { adDomainJoinPermissions } from './activedirectory/ad-domain-join-permissions';
 import { entraIntro } from './entra/entra-intro';
 import { entraOuVsAu } from './entra/entra-ou-vs-au';
 import { eam } from './entra/eam';
@@ -34,7 +35,7 @@ export const blogCategories = [
   {
     id: "activedirectory",
     title: "Active Directory",
-    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-dsrm-password","ad-health-check","ad-ds-datastore-layout","ad-naming-contexts-partions","dcdiag-advanced-commands","ad-inside-logic-phys", "ad-replication", "ad-recovery"]
+    posts: ["ad-intro", "ad-domain", "ad-schema", "ad-temp-groups", "ad-domain-join-permissions", "ad-dsrm-password","ad-health-check","ad-ds-datastore-layout","ad-naming-contexts-partions","dcdiag-advanced-commands","ad-inside-logic-phys", "ad-replication", "ad-recovery"]
   },
   {
     id: "entra",
@@ -69,6 +70,7 @@ export const blogPosts: Record<string, BlogPost> = {
   "ad-domain": adDomain,
   "ad-schema": adSchema,
   "ad-temp-groups": adTempGroups,
+  "ad-domain-join-permissions": adDomainJoinPermissions,
   "ad-dsrm-password": adDsrmPassword,
   "ad-health-check": adHealthCheck, // ← add this
   "ad-ds-datastore-layout": adDsDatastoreLayout, // ← add this

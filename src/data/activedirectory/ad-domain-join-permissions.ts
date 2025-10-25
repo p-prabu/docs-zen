@@ -5,13 +5,14 @@ export const adDomainJoinPermissions: BlogPost = {
   title: "Understanding Domain Join Permissions in Active Directory",
   category: "activedirectory",
   body: `
-# 🧩 Understanding Domain Join Permissions in Active Directory
 
-### 1️⃣ My Experience and Explanation
+_Published: OCT 25, 2025_
+
+### Domain join
 
 As an Active Directory administrator, I often need to tidy up OU permissions—especially the domain join rights that quietly pile up over time.
 
-In my own environments I’ve seen users who can join a computer just fine, but when they try to **rejoin with the same AD object**, the behavior is hit or miss.
+In my own environments I’ve seen admin who can join a computer just fine, but when they try to **rejoin with the same AD object**, the behavior is hit or miss.
 
 If the user or group has **full permissions** on the computer object delegation, rejoin attempts usually succeed.  
 When we get strict and grant only “Create Computer Object,” the rejoin fails because AD has no “recreate” right; it really expects “Delete Computer Object” plus the right kind of write permissions.  
@@ -23,7 +24,7 @@ Recently, Microsoft published an article that spells out **what permissions are 
 
 The script below addresses the exact pain I had, but every environment is different—treat it as guidance and always lab-test before rolling it into production.
 
-### 2️⃣ Script and Technical Explanation
+### Script and Technical Explanation
 
 #### Disclaimer
 > **For knowledge-purposes only.**  
@@ -51,19 +52,9 @@ dsacls "OU=Testing" /I:T /G "Test\\ADGroupDomainJoin:LC"
 dsacls "OU=Testing" /I:S /G "Test\\ADGroupDomainJoin:RP"
 \`\`\`
 
-#### Explanation of Key Flags & Permissions
 
-| Flag | Meaning | Description |
-|------|----------|-------------|
-| \`/I:S\` | Inherit to this object and all descendant objects | Applies to all computer objects under the OU |
-| \`/I:T\` | Apply to this object only | Applies to the OU itself |
-| \`:RP\` | Read Properties | Allows reading attributes |
-| \`:WP\` | Write Properties | Allows editing specific attributes |
-| \`:RPWP\` | Read + Write Properties | Combined |
-| \`:CA\` | Control Access | Used for Change/Reset Password permissions |
-| \`:WS\` | Validated Write | Grants safe write access to DNS Host Name or SPN |
-| \`:CCDC\` | Create Child / Delete Child | Allows creating and deleting computer objects |
-| \`:LC\` | List Contents | Allows viewing objects inside the OU |
+![Domain Join](/image/domainjoin.png)
+
 
 #### What This Script Does
 ✅ Allows the delegated group (\`Test\\ADGroupDomainJoin\`) to:
@@ -88,8 +79,6 @@ Below, I’ve left some **Microsoft reference documents** to understand the back
 - [Active Directory Domain Join Troubleshooting Guidance](https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/active-directory-domain-join-troubleshooting-guidance)
 
 ---
-
-*Written by Prabu Ponnan — Active Directory Specialist*
   `,
   headings: [
     { id: "understanding-domain-join-permissions-in-active-directory", text: "🧩 Understanding Domain Join Permissions in Active Directory", level: 1 },

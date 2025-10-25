@@ -1,6 +1,6 @@
 # 🧩 Understanding Domain Join Permissions in Active Directory  
 
-### 1️⃣ My Experience and Explanation  
+### Domain join 
 
 As an Active Directory administrator, I often need to tidy up OU permissions—especially the domain join rights that quietly pile up over time.
 
